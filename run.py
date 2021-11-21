@@ -15,10 +15,10 @@ def dungeon_size():
         init_dungeon(20, 40)
     elif "m" in sizef.lower():
         print("generating a medium dungeon")
-        init_dungeon(50,50)
+        init_dungeon(50, 50)
     elif "l" in sizef.lower():
         print("generating a large dungeon")
-        init_dungeon(100,100)
+        init_dungeon(100, 100)
     else:
         print("that's not a valid size you muppet")
 
@@ -31,11 +31,12 @@ def init_dungeon(d_width, d_height):
     print("Generating dungeon map...\n")
 
     dungeon_map = {}
-    for x in range(d_width):
-        for y in range(d_height):
-            dungeon_map[x, y] = 0
+    for xcoord in range(d_width):
+        for ycoord in range(d_height):
+            dungeon_map[xcoord, ycoord] = 0
     print("map generated!")
     return dungeon_map
+
 
 """
 def init_rooms(room_number, dungeon_width):
@@ -51,10 +52,11 @@ def init_rooms(room_number, dungeon_width):
         print(x)
 """
 
+
 def main():
     dungeon_size()
     print("init_rooms(6, dungeon_width)")
-    #print(dungeon_map)
+
 
 main()
 
