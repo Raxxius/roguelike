@@ -33,5 +33,10 @@ Overall program loop is as follows:
 ![overviewflow](docs/screenshots/function_flow.png)
 
 
+# credits
+
+Dungeon generator code was created using this as inspiration:
+
+https://python.plainenglish.io/create-a-random-dungeon-with-python-f17118c1eebd
 
 
