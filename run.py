@@ -42,15 +42,35 @@ def init_dungeon(d_width, d_height):
 
 def init_rooms(room_number, dungeon_width):
     """
-    This function adds x rooms to the dungeon
+    This function adds rooms to the dungeon
+    the number of rooms added is dependant upon the dungeon_size() function
+    rooms have a random size
+    dungeon_width is called to allow for expansion to change room size based on dungeon size
     """
     rooms = {}
     for room in range(room_number):
-        room_height = random.randint(4,6)
-        room_width = random.randint(4,6)
+        room_height = random.randint(4, 6)
+        room_width = random.randint(4, 6)
         rooms[room] = room_height, room_width
-    print(rooms)
+    position_rooms(rooms, dungeon_width)
 
+
+def position_rooms(rooms, dungeon_width):
+    """
+    This function puts the rooms generated in the init_rooms function
+    into the dungeon, rooms are added by changing the 0 value in the 
+    dungeon_map dict to a 1 
+    """
+    if dungeon_width == 20:
+        dungeon_height = 40
+    else: 
+        dungeon_height = dungeon_width
+
+    for room in rooms:
+        xcoord = random.randint(0, dungeon_width)
+        ycoord = random.randint(0, dungeon_height)
+        print(xcoord, ycoord)
+        print(rooms[room])
 
 
 def main():
