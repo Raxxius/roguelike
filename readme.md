@@ -50,6 +50,9 @@ compared to the code presented in the top project modified to better fit the pur
 and intergrate with a semi-perm storage solution in Google Sheets
 
 
+Realpython.com how to itterate through lists 
+
+https://realpython.com/iterate-through-dictionary-python/#how-to-iterate-through-a-dictionary-in-python-the-basics
 
 
 # bugs
