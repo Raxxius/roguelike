@@ -24,9 +24,12 @@ def init_dungeon(a, b):
     This function sets every square in the dungeon to wall
     """
     print("Generating dungeon map...\n")
+
+    dungeon_map = {}
     for x in range(a):
         for y in range(b):
-            print(x,y)
+            dungeon_map[x,y] = 0
+    print(dungeon_map)
     print("map generated!")
 
 
@@ -34,3 +37,4 @@ def main():
     init_dungeon(dungeon_width(), dungeon_height())
 
 main()
+

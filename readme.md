@@ -21,7 +21,8 @@ The progam has a number of features that are inspired by the rougelike genre, to
 1. Random map generation - Eachtime a game is started a new random map will be generated.
 2. Character permadeath - Characters will be stored on a googlesheets document.
 3. Simultaneous turn based gameplay - Each input from the user will progress the game 1 turn.
-4. Feedback - The player will not be able to walk through walls, and will be told they are trying to do so, walking through a monster will initiate combat.
+4. Feedback - The player will not be able to walk through walls, and will be told they are trying to do so, 
+    walking through a monster will initiate combat.
 5. Final Boss - The player will win the game by eliminating the final boss, or the player will die trying.
 
 ## Coding 
@@ -39,4 +40,5 @@ Dungeon generator code was created using this as inspiration:
 
 https://python.plainenglish.io/create-a-random-dungeon-with-python-f17118c1eebd
 
-
+compared to the code presented in the top project modified to better fit the purpose of this project, 
+and intergrate with a semi-perm storage solution in Google Sheets
