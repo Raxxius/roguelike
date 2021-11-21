@@ -43,22 +43,18 @@ def init_dungeon(d_width, d_height):
 def init_rooms(room_number, dungeon_width):
     """
     This function adds x rooms to the dungeon
-    currently only 6 x 6 rooms are generated 
     """
-    print("room making function to go here")
-    # room_height = 6
-    # room_width = 6
-    # rooms = {}
-    # for room in range(room_number):
-    #   x = random.randrange(0, dungeon_width)
-    #    print(x)
-    #    print(f"Making room {room_number}")
+    rooms = {}
+    for room in range(room_number):
+        room_height = random.randint(4,6)
+        room_width = random.randint(4,6)
+        rooms[room] = room_height, room_width
+    print(rooms)
+
 
 
 def main():
     dungeon_size()
-    print("init_rooms(6, dungeon_width)")
-
 
 main()
 
