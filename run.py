@@ -11,16 +11,17 @@ def dungeon_size():
     sizef = size[0]
     if "s" in sizef.lower():
         print("Creating a small dungeon")
-        init_dungeon(20, 40)
-        init_rooms(random.randint(8, 12), 20)
+        dungeon_map = init_dungeon(20, 40)
+        room_number = init_rooms(random.randint(8, 12))
+        position_rooms(room_number, dungeon_map)
     elif "m" in sizef.lower():
         print("Creating a medium dungeon")
         init_dungeon(50, 50)
-        init_rooms(random.randint(20, 30), 50)
+        init_rooms(random.randint(20, 30))
     elif "l" in sizef.lower():
         print("Creating a large dungeon")
         init_dungeon(100, 100)
-        init_rooms(random.randint(50, 70), 100)
+        init_rooms(random.randint(50, 70))
     else:
         print("that's not a valid size you muppet")
 
@@ -40,7 +41,7 @@ def init_dungeon(d_width, d_height):
     return dungeon_map
 
 
-def init_rooms(room_number, dungeon_width):
+def init_rooms(room_number):
     """
     This function adds rooms to the dungeon
     the number of rooms added is dependant upon the dungeon_size() function
@@ -52,26 +53,25 @@ def init_rooms(room_number, dungeon_width):
     for room in range(room_number):
         room_height = random.randint(4, 6)
         room_width = random.randint(4, 6)
-        rooms[room] = room_height, room_width
-    position_rooms(rooms, dungeon_width)
+        rooms[room] = f"room {room}", room_height, room_width
+    return rooms
 
 
-def position_rooms(rooms, dungeon_width):
+def position_rooms(rooms, dungeon_map):
     """
     This function puts the rooms generated in the init_rooms function
     into the dungeon, rooms are added by changing the 0 value in the
     dungeon_map dict to a 1.
     """
-    if dungeon_width == 20:
-        dungeon_height = 40
-    else:
-        dungeon_height = dungeon_width
+    print(dungeon_map)
 
+    """
     for room in rooms:
         xcoord = random.randint(0, dungeon_width)
         ycoord = random.randint(0, dungeon_height)
         print(xcoord, ycoord)
         print(rooms[room])
+    """
 
 
 def main():
