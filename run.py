@@ -14,6 +14,7 @@ def dungeon_size():
         dungeon_map = init_dungeon(20, 40)
         room_number = init_rooms(random.randint(8, 12))
         position_rooms(room_number, dungeon_map, 20, 40)
+        print(dungeon_map)
     elif "m" in sizef.lower():
         print("Creating a medium dungeon")
         init_dungeon(50, 50)
@@ -33,9 +34,11 @@ def init_dungeon(d_width, d_height):
     """
     print("Generating dungeon map...")
     dungeon_map = {}
+    x = 0
     for xcoord in range(d_width):
         for ycoord in range(d_height):
-            dungeon_map[xcoord, ycoord] = True
+            dungeon_map[x] = f"Tile {x}", xcoord, ycoord, True
+            x += 1
     print("map generated!")
     return dungeon_map
 
@@ -48,28 +51,30 @@ def init_rooms(room_number):
     dungeon_width is called to allow for expansion to change room size based
     on dungeon size
     """
+
     rooms = {}
     for room in range(room_number):
         room_height = random.randint(4, 6)
         room_width = random.randint(4, 6)
-        rooms[room] = f"room {room}", room_height, room_width
+        rooms[room] = f"room {room}", room_height, room_width, False
     return rooms
 
 
 def position_rooms(rooms, dungeon_map, dungeon_width, dungeon_height):
     """
     This function puts the rooms generated in the init_rooms function
-    into the dungeon, rooms are added by changing the 0 value in the
-    dungeon_map dict to a 1.
+    into the dungeon, rooms are added by changing the True value in the
+    dungeon_map dict to False.
     """
-    print(rooms)
+    # Generating random starting points for the rooms
     for room in rooms:
         xcoord = random.randint(0, dungeon_width)
         ycoord = random.randint(0, dungeon_height)
+
+
         dungeon_map[xcoord, ycoord] = False
         print(xcoord, ycoord)
     print(rooms[room])
-    print(dungeon_map)
 
 
 def main():
