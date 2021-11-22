@@ -37,7 +37,7 @@ def init_dungeon(d_width, d_height):
     x = 0
     for xcoord in range(d_width):
         for ycoord in range(d_height):
-            dungeon_map[x] = f"Tile {x}", xcoord, ycoord, True
+            dungeon_map[x] = f"Tile {x}", xcoord, ycoord, wall
             x += 1
     print("map generated!")
     return dungeon_map
@@ -56,7 +56,7 @@ def init_rooms(room_number):
     for room in range(room_number):
         room_height = random.randint(4, 6)
         room_width = random.randint(4, 6)
-        rooms[room] = f"room {room}", room_height, room_width, False
+        rooms[room] = f"room {room}", room_height, room_width, room
     return rooms
 
 
@@ -66,11 +66,11 @@ def position_rooms(rooms, dungeon_map, dungeon_width, dungeon_height):
     into the dungeon, rooms are added by changing the True value in the
     dungeon_map dict to False.
     """
+    print(rooms)
     # Generating random starting points for the rooms
     for room in rooms:
         xcoord = random.randint(0, dungeon_width)
         ycoord = random.randint(0, dungeon_height)
-
 
         dungeon_map[xcoord, ycoord] = False
         print(xcoord, ycoord)
