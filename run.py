@@ -67,6 +67,8 @@ def player_select_new(character):
     This function selects a new chracter and adds them to the googlesheet
     """
     print(f"A new hero, {character} enters the fight!")
+    new_character = [character, "alive", 0]
+    SHEET.worksheet("players").append_row(new_character)
 
 def dungeon_size():
     """
