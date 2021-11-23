@@ -56,9 +56,16 @@ def opening_screen(alive_characters, dead_characters):
 
 
 def player_select_existing(character):
+    """
+    This function selects a character from the googlesheet and loads
+    their stats
+    """
     print(f"{character} returns to fight!")
 
 def player_select_new(character):
+    """
+    This function selects a new chracter and adds them to the googlesheet
+    """
     print(f"A new hero, {character} enters the fight!")
 
 def dungeon_size():
