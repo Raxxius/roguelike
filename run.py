@@ -14,11 +14,16 @@ SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('roguelike')
 
-players = SHEET.worksheet("players")
 
-player_data = players.get_all_values()
-print(player_data)
+def player_select():
 
+    players = SHEET.worksheet("players")
+    player_data = players.get_all_values()
+    alive_characters = []
+    for player_number in player_data:
+        if player_number[1] == "alive":
+            alive_characters.append(player_number[0]) 
+    print(f"Welcome to the roguelike dungeon\nThe following characters are alive\n {alive_characters}")
 
 
 def dungeon_size():
@@ -34,7 +39,6 @@ def dungeon_size():
         dungeon_map = init_dungeon(20, 40)
         room_number = init_rooms(random.randint(8, 12))
         position_rooms(room_number, dungeon_map, 20, 40)
-        print(dungeon_map)
     elif "m" in sizef.lower():
         print("Creating a medium dungeon")
         init_dungeon(50, 50)
@@ -128,7 +132,7 @@ def main():
     """
     main function to call other functions
     """
-
+    player_select()
     dungeon_size()
 
 
