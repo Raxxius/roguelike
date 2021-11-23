@@ -31,7 +31,7 @@ def player_select():
         elif player_number[1] == "dead":
             dead_characters.append(player_number[0])
     opening_screen(alive_characters, dead_characters)
-    return
+
 
 def opening_screen(alive_characters, dead_characters):
     """
@@ -61,14 +61,19 @@ def player_select_existing(character):
     their stats
     """
     print(f"{character} returns to fight!")
+    for player_x in SHEET.worksheet("players").get_all_values():
+        if player_x[0] == character:
+            character_info = [player_x[0], player_x[1], player_x[2]]
+    print(character_info)
 
 def player_select_new(character):
     """
     This function selects a new chracter and adds them to the googlesheet
     """
     print(f"A new hero, {character} enters the fight!")
-    new_character = [character, "alive", 0]
-    SHEET.worksheet("players").append_row(new_character)
+    character_info = [character, "alive", 0]
+    SHEET.worksheet("players").append_row(character_info)
+
 
 def dungeon_size():
     """
