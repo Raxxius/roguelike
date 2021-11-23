@@ -1,5 +1,18 @@
 import random
+import pprint
+import gspread
+from google.oauth2.service_account import Credentials
 
+SCOPE = [
+    "https://www.googleapis.com/auth/spreadsheets",
+    "https://www.googleapis.com/auth/drive.file",
+    "https://www.googleapis.com/auth/drive"
+    ]
+
+CREDS = Credentials.from_service_account_file('creds.json')
+SCOPED_CREDS = CREDS.with_scopes(SCOPE)
+GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
+SHEET = GSPREAD_CLIENT.open('roguelike')
 
 def dungeon_size():
     """
@@ -14,7 +27,7 @@ def dungeon_size():
         dungeon_map = init_dungeon(20, 40)
         room_number = init_rooms(random.randint(8, 12))
         position_rooms(room_number, dungeon_map, 20, 40)
-        # print(dungeon_map)
+        print(dungeon_map)
     elif "m" in sizef.lower():
         print("Creating a medium dungeon")
         init_dungeon(50, 50)
@@ -55,6 +68,7 @@ def init_rooms(room_number):
     Dungeon_width is called to allow for change of room size based
     on dungeon size.
     """
+
     rooms = {}
     for room in range(room_number):
         room_height = random.randint(4, 6)
@@ -73,14 +87,13 @@ def position_rooms(rooms, dungeon_map, dungeon_width, dungeon_height):
     for room in rooms:
         xcoord = random.randint(0, dungeon_width)
         ycoord = random.randint(0, dungeon_height)
-        xcoord_b, ycoord_b = room_pos_check(xcoord, ycoord, dungeon_width, dungeon_height,
+        xcoord, ycoord = room_pos_check(xcoord, ycoord, dungeon_width, dungeon_height,
                              room, rooms)
         for xvar in range(rooms[room][1]):
-            xnew = xcoord_b + xvar
+            xnew = xcoord + xvar
             for yvar in range(rooms[room][2]):
-                ynew = ycoord_b + yvar
+                ynew = ycoord + yvar
                 dungeon_map[xnew, ynew] = f"room {room}"
-    print(dungeon_map)
 
 
 def room_pos_check(xcoord, ycoord, dungeon_width, dungeon_height, room, rooms):
@@ -89,17 +102,18 @@ def room_pos_check(xcoord, ycoord, dungeon_width, dungeon_height, room, rooms):
     and that the edges (0 coordinates, end of map coordinates) are always
     walls
     """
+
     if xcoord == 0:
         xcoord = 1
     if ycoord == 0:
         ycoord = 1
+
     if xcoord + rooms[room][1] >= dungeon_width:
         xcoord = dungeon_width - rooms[room][1] - 1
 
     if ycoord + rooms[room][2] >= dungeon_height:
         ycoord = dungeon_height - rooms[room][2] - 1
-    # print(f"y min {ycoord}, y max {ycoord + rooms[room][2]}")
-    # print(f"x min {xcoord}, x max {xcoord + rooms[room][1]}")
+
     return xcoord, ycoord
 
 
@@ -107,6 +121,7 @@ def main():
     """
     main function to call other functions
     """
+
     dungeon_size()
 
 
