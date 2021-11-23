@@ -14,6 +14,13 @@ SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('roguelike')
 
+players = SHEET.worksheet("players")
+
+player_data = players.get_all_values()
+print(player_data)
+
+
+
 def dungeon_size():
     """
     This function decides the size of the map and runs all
@@ -87,8 +94,8 @@ def position_rooms(rooms, dungeon_map, dungeon_width, dungeon_height):
     for room in rooms:
         xcoord = random.randint(0, dungeon_width)
         ycoord = random.randint(0, dungeon_height)
-        xcoord, ycoord = room_pos_check(xcoord, ycoord, dungeon_width, dungeon_height,
-                             room, rooms)
+        xcoord, ycoord = room_pos_check(xcoord, ycoord, dungeon_width,
+                                        dungeon_height, room, rooms)
         for xvar in range(rooms[room][1]):
             xnew = xcoord + xvar
             for yvar in range(rooms[room][2]):
