@@ -85,7 +85,9 @@ def position_rooms(rooms, dungeon_map, dungeon_width, dungeon_height):
 
 def room_pos_check(xcoord, ycoord, dungeon_width, dungeon_height, room, rooms):
     """
-    Makes sure that the rooms do not go outside the boundries of the
+    Makes sure that the rooms do not go outside the boundries of the map
+    and that the edges (0 coordinates, end of map coordinates) are always
+    walls
     """
 
     if xcoord == 0:
