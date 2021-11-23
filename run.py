@@ -23,8 +23,23 @@ def player_select():
     for player_number in player_data:
         if player_number[1] == "alive":
             alive_characters.append(player_number[0]) 
-    print(f"Welcome to the roguelike dungeon\nThe following characters are alive\n {alive_characters}")
+    print(f'''
+    Welcome to the roguelike dungeon
+    The following characters are alive 
+    {alive_characters}
+    ''')
+    select_character = input("Type the name of your character\n")
+    if select_character in alive_characters:
+        player_select_existing(select_character)
+    else:
+        player_select_new(select_character)
 
+
+def player_select_existing(character):
+    print(f"{character} returns to fight!")
+
+def player_select_new(character):
+    print(f"A new hero, {character} enters the fight!")
 
 def dungeon_size():
     """
