@@ -64,6 +64,8 @@ https://realpython.com/iterate-through-dictionary-python/#how-to-iterate-through
 
 ### Bug
 - When generating dungeon rooms, rooms stretching beyond the boundries of the map
+- Initial coding did not fix the problem with rooms stretching beyond the x and y parameters
 ### Solution
-- initial coding did not fix the problem with rooms stretching beyond the x and y parameters
+- This problem was not a fault in the room_pos_check() function but in the calling of the returned values, 
+by using a multivariable return for new variables the code was fixed
 
