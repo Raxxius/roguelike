@@ -16,21 +16,41 @@ SHEET = GSPREAD_CLIENT.open('roguelike')
 
 
 def player_select():
-
+    """ 
+    This function reads the google sheet for characters
+    with the status = "alive", and allows the players
+    to select an alive character or choose a new one
+    """
     players = SHEET.worksheet("players")
     player_data = players.get_all_values()
     alive_characters = []
+    dead_characters = []
     for player_number in player_data:
         if player_number[1] == "alive":
-            alive_characters.append(player_number[0]) 
+            alive_characters.append(player_number[0])
+        elif player_number[1] == "dead":
+            dead_characters.append(player_number[0])
+    opening_screen(alive_characters, dead_characters)
+    return
+
+def opening_screen(alive_characters, dead_characters):
+    """
+    Checks to see if a character already exists in the database
+    if the players selects a name that already exists but is dead, the user
+    will be asked to pick another character.
+    """
     print(f'''
     Welcome to the roguelike dungeon
     The following characters are alive 
     {alive_characters}
+    you can select one of these characters or create a new one by typing a name
     ''')
     select_character = input("Type the name of your character\n")
     if select_character in alive_characters:
         player_select_existing(select_character)
+    elif select_character in dead_characters:
+        print(f"Sorry, {select_character} is dead! please select another name.")
+        opening_screen(alive_characters, dead_characters)
     else:
         player_select_new(select_character)
 
