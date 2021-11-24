@@ -29,7 +29,8 @@ def player_select():
             alive_characters.append(player_number[0])
         elif player_number[1] == "dead":
             dead_characters.append(player_number[0])
-    opening_screen(alive_characters, dead_characters)
+    character = opening_screen(alive_characters, dead_characters)
+    return character
 
 
 def opening_screen(alive_characters, dead_characters):
@@ -46,12 +47,13 @@ def opening_screen(alive_characters, dead_characters):
     ''')
     select_character = input("Type the name of your character\n")
     if select_character in alive_characters:
-        player_select_existing(select_character)
+        character_info = player_select_existing(select_character)
     elif select_character in dead_characters:
         print(f"Sorry, {select_character} is dead! please select another name.")
         opening_screen(alive_characters, dead_characters)
     else:
-        player_select_new(select_character)
+        character_info = player_select_new(select_character)
+    return character_info
 
 
 def player_select_existing(character):
@@ -63,7 +65,7 @@ def player_select_existing(character):
     for player_x in SHEET.worksheet("players").get_all_values():
         if player_x[0] == character:
             character_info = player_x
-    print(character_info)
+    return character_info
 
 
 def player_select_new(character):
@@ -73,13 +75,19 @@ def player_select_new(character):
     print(f"A new hero, {character} enters the fight!")
     character_info = [character, "alive", 0]
     SHEET.worksheet("players").append_row(character_info)
+    return character_info
 
-
-def dungeon_size():
+def dungeon_size(character):
     """
     This function decides the size of the map and runs all
     the individual dungeon generation functions
+    if a map already exists for the character it will load that instead
     """
+
+    existing_map = SHEET.worksheets()
+    for sheet in existing_map
+    """
+    print(f"{character[0]} is already in a dungeon, loading the map...")
     print("defining dungeon size...\n")
     size = input("how large would you like the dungeon to be? S, M or L?\n")
     sizef = size[0]
@@ -88,6 +96,7 @@ def dungeon_size():
         dungeon_map = init_dungeon(20, 40)
         room_number = init_rooms(random.randint(8, 12))
         position_rooms(room_number, dungeon_map, 20, 40)
+        SHEET.add_worksheet(title=f"{character[0]}_map", rows="40", cols="20")
     elif "m" in sizef.lower():
         print("Creating a medium dungeon")
         init_dungeon(50, 50)
@@ -98,7 +107,7 @@ def dungeon_size():
         init_rooms(random.randint(50, 70))
     else:
         print("that's not a valid size you muppet")
-
+"""
 
 def init_dungeon(d_width, d_height):
     """
@@ -167,13 +176,10 @@ def room_pos_check(xcoord, ycoord, dungeon_width, dungeon_height, room, rooms):
         xcoord = 1
     if ycoord == 0:
         ycoord = 1
-
     if xcoord + rooms[room][1] >= dungeon_width:
         xcoord = dungeon_width - rooms[room][1] - 1
-
     if ycoord + rooms[room][2] >= dungeon_height:
         ycoord = dungeon_height - rooms[room][2] - 1
-
     return xcoord, ycoord
 
 
@@ -181,8 +187,8 @@ def main():
     """
     main function to call other functions
     """
-    player_select()
-    dungeon_size()
+    character = player_select()
+    dungeon_size(character)
 
 
 main()

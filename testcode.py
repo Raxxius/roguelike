@@ -15,5 +15,4 @@ GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('roguelike')
 
 
-SHEET.add_worksheet(title="A_worksheet", rows="40", cols="20")
-set_row_height("A_worksheet", 5, 5)
+print SHEET.worksheet(f"{character[0]}_map") = True:

@@ -87,3 +87,6 @@ https://realpython.com/iterate-through-dictionary-python/#how-to-iterate-through
 - This problem was not a fault in the room_pos_check() function but in the calling of the returned values, 
 by using a multivariable return for new variables the code was fixed.
 
+### Bug
+- When generating the map detection function, the program crashed due to the error WorksheetNotFound(title)
+
