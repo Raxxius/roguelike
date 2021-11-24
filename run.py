@@ -1,5 +1,4 @@
 import random
-import pprint
 import gspread
 from google.oauth2.service_account import Credentials
 
@@ -16,7 +15,7 @@ SHEET = GSPREAD_CLIENT.open('roguelike')
 
 
 def player_select():
-    """ 
+    """
     This function reads the google sheet for characters
     with the status = "alive", and allows the players
     to select an alive character or choose a new one
@@ -41,7 +40,7 @@ def opening_screen(alive_characters, dead_characters):
     """
     print(f'''
     Welcome to the roguelike dungeon
-    The following characters are alive 
+    The following characters are alive
     {alive_characters}
     you can select one of these characters or create a new one by typing a name
     ''')
@@ -63,8 +62,9 @@ def player_select_existing(character):
     print(f"{character} returns to fight!")
     for player_x in SHEET.worksheet("players").get_all_values():
         if player_x[0] == character:
-            character_info = [player_x[0], player_x[1], player_x[2]]
+            character_info = player_x
     print(character_info)
+
 
 def player_select_new(character):
     """
