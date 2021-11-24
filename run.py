@@ -84,8 +84,13 @@ def dungeon_size(character):
     if a map already exists for the character it will load that instead
     """
 
-    existing_map = SHEET.worksheets()
-    for sheet in existing_map
+    existing_map = str(SHEET.worksheets())
+    character_map = f"'{character[0]}_map'"
+    if character_map in existing_map:
+        print(f"{character[0]} is already in a dungeon. Loading the dungeon.")
+    else:
+        print("defining dungeon size...\n")
+    # for sheet in existing_map
     """
     print(f"{character[0]} is already in a dungeon, loading the map...")
     print("defining dungeon size...\n")
