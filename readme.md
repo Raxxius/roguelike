@@ -68,10 +68,14 @@ compared to the code presented in the top project modified to better fit the pur
 and intergrate with a semi-perm storage solution in Google Sheets
 
 
-Realpython.com how to itterate through lists 
+Realpython.com how to itterate through lists:
 
 https://realpython.com/iterate-through-dictionary-python/#how-to-iterate-through-a-dictionary-in-python-the-basics
 
+
+gspread documentation:
+
+https://docs.gspread.org/en/latest/user-guide.html
 
 # Bugs
 
@@ -89,4 +93,9 @@ by using a multivariable return for new variables the code was fixed.
 
 ### Bug
 - When generating the map detection function, the program crashed due to the error WorksheetNotFound(title)
+- This bug continued when attempting to itterate the list, while printing out individual list components worked, a for loop would throw up an
+error of 'TypeError: list indices must be integers or slices, not Worksheet'
+### Solution
+- This bug was not directly fixed, but a workaround was found, where the list entry was converted into a string, the whole string was then
+scanned for a character match.
 

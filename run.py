@@ -77,6 +77,7 @@ def player_select_new(character):
     SHEET.worksheet("players").append_row(character_info)
     return character_info
 
+
 def dungeon_size(character):
     """
     This function decides the size of the map and runs all
@@ -90,29 +91,29 @@ def dungeon_size(character):
         print(f"{character[0]} is already in a dungeon. Loading the dungeon.")
     else:
         print("defining dungeon size...\n")
-    # for sheet in existing_map
-    """
-    print(f"{character[0]} is already in a dungeon, loading the map...")
-    print("defining dungeon size...\n")
-    size = input("how large would you like the dungeon to be? S, M or L?\n")
-    sizef = size[0]
-    if "s" in sizef.lower():
-        print("Creating a small dungeon")
-        dungeon_map = init_dungeon(20, 40)
-        room_number = init_rooms(random.randint(8, 12))
-        position_rooms(room_number, dungeon_map, 20, 40)
-        SHEET.add_worksheet(title=f"{character[0]}_map", rows="40", cols="20")
-    elif "m" in sizef.lower():
-        print("Creating a medium dungeon")
-        init_dungeon(50, 50)
-        init_rooms(random.randint(20, 30))
-    elif "l" in sizef.lower():
-        print("Creating a large dungeon")
-        init_dungeon(100, 100)
-        init_rooms(random.randint(50, 70))
-    else:
-        print("that's not a valid size you muppet")
-"""
+        size = input("how large would you like the dungeon to be? S, M or L?\n")
+        sizef = size[0]
+        if "s" in sizef.lower():
+            print("Creating a small dungeon")
+
+            dungeon_map = init_dungeon(20, 40)
+            room_number = init_rooms(random.randint(8, 12))
+            position_rooms(room_number, dungeon_map, 20, 40)
+            SHEET.add_worksheet(title=f"{character[0]}_map", rows="40", cols="20")
+            dungeon_list = list(dungeon_map.values())
+            dungeon_passover = [dungeon_list[x:x+100] for x in range(0, len(dungeon_list), 20)]
+            SHEET.worksheet(title=f"{character[0]}_map").update('A1', dungeon_passover)
+        elif "m" in sizef.lower():
+            print("Creating a medium dungeon")
+            init_dungeon(50, 50)
+            init_rooms(random.randint(20, 30))
+        elif "l" in sizef.lower():
+            print("Creating a large dungeon")
+            init_dungeon(100, 100)
+            init_rooms(random.randint(50, 70))
+        else:
+            print("that's not a valid size you muppet")
+
 
 def init_dungeon(d_width, d_height):
     """
@@ -168,7 +169,7 @@ def position_rooms(rooms, dungeon_map, dungeon_width, dungeon_height):
             for yvar in range(rooms[room][2]):
                 ynew = ycoord + yvar
                 dungeon_map[xnew, ynew] = f"room {room}"
-
+    return dungeon_map
 
 def room_pos_check(xcoord, ycoord, dungeon_width, dungeon_height, room, rooms):
     """
