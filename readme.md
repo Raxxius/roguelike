@@ -83,6 +83,11 @@ Curses libary overview
 https://www.youtube.com/watch?v=BK7YvpTT4Sw&ab_channel=IndianPythonista
 
 
+uni_curses
+
+https://github.com/unicurses/unicurses
+
+
 # Bugs
 
 ### Bug
