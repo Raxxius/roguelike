@@ -1,5 +1,6 @@
 import random
 import gspread
+import unicurses
 from google.oauth2.service_account import Credentials
 
 SCOPE = [

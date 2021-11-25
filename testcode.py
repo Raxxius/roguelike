@@ -1,18 +1,13 @@
 import random
-import gspread
+import turtle
+import tkinter as tk
+from turtle import Screen, Turtle
 from google.oauth2.service_account import Credentials
 
 
-SCOPE = [
-    "https://www.googleapis.com/auth/spreadsheets",
-    "https://www.googleapis.com/auth/drive.file",
-    "https://www.googleapis.com/auth/drive"
-    ]
+screen = Screen()
+screen.setup(width=600, height=600)
+screen.bgcolor("black")
+screen.title("Rougelike Dungeon")
 
-CREDS = Credentials.from_service_account_file('creds.json')
-SCOPED_CREDS = CREDS.with_scopes(SCOPE)
-GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
-SHEET = GSPREAD_CLIENT.open('roguelike')
-
-
-print SHEET.worksheet(f"{character[0]}_map") = True:
+Screen.exitonclick()
