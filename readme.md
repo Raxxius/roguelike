@@ -77,6 +77,12 @@ gspread documentation:
 
 https://docs.gspread.org/en/latest/user-guide.html
 
+
+Curses libary overview
+
+https://www.youtube.com/watch?v=BK7YvpTT4Sw&ab_channel=IndianPythonista
+
+
 # Bugs
 
 ### Bug
