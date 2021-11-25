@@ -99,11 +99,9 @@ def dungeon_size(character):
             dungeon_map = init_dungeon(20, 40)
             room_number = init_rooms(random.randint(8, 12))
             position_rooms(room_number, dungeon_map, 20, 40)
-            SHEET.add_worksheet(title=f"{character[0]}_map", rows="20", cols="40")
+            SHEET.add_worksheet(title=f"{character[0]}_map", rows="40", cols="20")
             dungeon_list = list(dungeon_map.values())
-            dungeon_passover = [dungeon_list[x:x+40] for x in range(0, len(dungeon_list), 40)]
-            print(dungeon_map)
-            print(dungeon_passover)
+            dungeon_passover = [dungeon_list[x:x+20] for x in range(0, len(dungeon_list), 20)]
             SHEET.worksheet(title=f"{character[0]}_map").update('A1', dungeon_passover)
         elif "m" in sizef.lower():
             print("Creating a medium dungeon")
@@ -128,8 +126,8 @@ def init_dungeon(d_width, d_height):
 
     print("Generating dungeon map...")
     dungeon_map = {}
-    for xcoord in range(d_width):
-        for ycoord in range(d_height):
+    for ycoord in range(d_height):
+        for xcoord in range(d_width):
             # creates a dungeon tile with an x,y coord and sets True.
             dungeon_map[xcoord, ycoord] = "wall"
     print("map generated!")
@@ -172,6 +170,7 @@ def position_rooms(rooms, dungeon_map, dungeon_width, dungeon_height):
                 ynew = ycoord + yvar
                 dungeon_map[xnew, ynew] = f"room {room}"
     return dungeon_map
+
 
 def room_pos_check(xcoord, ycoord, dungeon_width, dungeon_height, room, rooms):
     """

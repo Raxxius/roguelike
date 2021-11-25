@@ -110,5 +110,6 @@ read by the gspread
 ### Bug
 - Map as added ended up on its side, ie a 20 x 40 map was being put in a 40 rows and 20 columns. 
 ### Solution
-- No solution, this is because the data is being put in in rows (y first) while the data is generated in columns 
+- This is because the coordinate data was being generated in a for x (for y) loop. The result is that the data is data is generated in columns
+while the gspread  
 - to fix this the map generation code could be reversed, but as it stands it's acceptable.
