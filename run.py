@@ -99,9 +99,11 @@ def dungeon_size(character):
             dungeon_map = init_dungeon(20, 40)
             room_number = init_rooms(random.randint(8, 12))
             position_rooms(room_number, dungeon_map, 20, 40)
-            SHEET.add_worksheet(title=f"{character[0]}_map", rows="40", cols="20")
+            SHEET.add_worksheet(title=f"{character[0]}_map", rows="20", cols="40")
             dungeon_list = list(dungeon_map.values())
-            dungeon_passover = [dungeon_list[x:x+100] for x in range(0, len(dungeon_list), 20)]
+            dungeon_passover = [dungeon_list[x:x+40] for x in range(0, len(dungeon_list), 40)]
+            print(dungeon_map)
+            print(dungeon_passover)
             SHEET.worksheet(title=f"{character[0]}_map").update('A1', dungeon_passover)
         elif "m" in sizef.lower():
             print("Creating a medium dungeon")

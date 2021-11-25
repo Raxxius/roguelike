@@ -99,3 +99,16 @@ error of 'TypeError: list indices must be integers or slices, not Worksheet'
 - This bug was not directly fixed, but a workaround was found, where the list entry was converted into a string, the whole string was then
 scanned for a character match.
 
+### Bug
+- When updating the list to the google sheets, numerous errors were occuring, this was because the data was not in a format that could be
+read by the gspread
+- Data generated was in a pair dictonary with internal keys and gspread commands would upload the whole datapackage into a single cell
+
+### Solution
+- Data was broken down into a list of lists the length of the rows
+
+### Bug
+- Map as added ended up on its side, ie a 20 x 40 map was being put in a 40 rows and 20 columns. 
+### Solution
+- No solution, this is because the data is being put in in rows (y first) while the data is generated in columns 
+- to fix this the map generation code could be reversed, but as it stands it's acceptable.
