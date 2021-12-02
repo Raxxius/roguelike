@@ -124,3 +124,8 @@ read by the gspread
 - This is because the coordinate data was being generated in a for x (for y) loop. The result is that the data is data is generated in columns
 while the gspread  
 - to fix this the map generation code could be reversed, but as it stands it's acceptable.
+
+### Bug
+- When developing the curses terminal, using the full width (80 columns) caused an error
+### Solution
+- No solution, a workaround to just use 79 columns for the terminal.
