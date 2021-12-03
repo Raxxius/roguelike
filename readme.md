@@ -129,3 +129,5 @@ while the gspread
 - When developing the curses terminal, using the full width (80 columns) caused an error
 ### Solution
 - No solution, a workaround to just use 79 columns for the terminal.
+- Update - this is due to writing to the lower right corner of the screen produces an error
+due to pushing the cursor beyond the screen. This can be ignored and the system will work.
