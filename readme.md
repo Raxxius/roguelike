@@ -78,14 +78,23 @@ gspread documentation:
 https://docs.gspread.org/en/latest/user-guide.html
 
 
-Curses libary overview
+Curses libary overview:
 
 https://www.youtube.com/watch?v=BK7YvpTT4Sw&ab_channel=IndianPythonista
 
 
-uni_curses
+python curses tutorial #1 to 5:
 
-https://github.com/unicurses/unicurses
+https://www.youtube.com/watch?v=Db4oc8qc9RU&t=196s&ab_channel=TechWithTim 
+
+
+Python curses.resizeterm() Examples:
+
+https://www.programcreek.com/python/example/57430/curses.resizeterm
+
+Curses rectangle at end of the screen issues:
+
+https://stackoverflow.com/questions/52804155/extending-curses-rectangle-box-to-edge-of-terminal-in-python
 
 
 # Bugs
@@ -128,6 +137,5 @@ while the gspread
 ### Bug
 - When developing the curses terminal, using the full width (80 columns) caused an error
 ### Solution
-- No solution, a workaround to just use 79 columns for the terminal.
 - Update - this is due to writing to the lower right corner of the screen produces an error
 due to pushing the cursor beyond the screen. This can be ignored and the system will work.
