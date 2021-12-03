@@ -123,7 +123,6 @@ scanned for a character match.
 - When updating the list to the google sheets, numerous errors were occuring, this was because the data was not in a format that could be
 read by the gspread
 - Data generated was in a pair dictonary with internal keys and gspread commands would upload the whole datapackage into a single cell
-
 ### Solution
 - Data was broken down into a list of lists the length of the rows
 
