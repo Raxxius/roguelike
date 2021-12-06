@@ -196,19 +196,19 @@ def room_pos_check(xcoord, ycoord, dungeon_width, dungeon_height, room, rooms):
 
 def gamescreen(stdscr, character):
     """ this function loads the main game screen curses overlay."""
-    char_name = character
-    char_health = 9
+    char_name = character[0]
+    char_health = character[4]
     char_max_health = 90
-    char_mana = 16
+    char_mana = character[5]
     char_max_mana = 40
-    skill_1 = ""
-    skill_2 = ""
-    skill_3 = ""
-    skill_4 = ""
-    skill_5 = ""
-    skill_6 = ""
-    char_weap = "Longsword"
-    char_armour = "Chainmail"
+    skill_1 = character[6]
+    skill_2 = character[7]
+    skill_3 = character[8]
+    skill_4 = character[9]
+    skill_5 = character[10]
+    skill_6 = character[11]
+    char_weap = character[12]
+    char_armour = character[13]
 
 
     curses.init_pair(1, curses.COLOR_GREEN, curses.COLOR_RED)
