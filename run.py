@@ -236,15 +236,18 @@ def gamescreen(stdscr, character):
 
     # sets up the map pad
     map = curses.newpad(40, 20)
+    stdscr.refresh()
     # test code
-    for y in range(0, 40):
-        for x in range(0, 20):
-            map.addstr("#")
+    for i in range(200):
+        for j in range(26):
+            char = chr(67 + j)
+            try:
+                map.addstr("#")
+            except curses.error:
+                pass
 
-    try:
-        map.refresh(0, 0, 0, 26, 23, 79)
-    except curses.error:
-        pass
+    
+    map.refresh(0, 0, 0, 26, 23, 78)
 
     stdscr.refresh()
     character_stats.refresh()
