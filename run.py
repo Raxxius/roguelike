@@ -212,6 +212,7 @@ def gamescreen(stdscr, character):
     except curses.error:
         pass
 
+    # adds the character stats to the characters stats window
     character_stats.clear()
     health_gap_len = 8 - (len(str(character[4])) + len(str(character[14])))
     health_gap = " " * health_gap_len
@@ -234,6 +235,7 @@ def gamescreen(stdscr, character):
                            "WEAPON     ARMOUR\n"
                            f"{character[12]}{weap_gap}{character[13]}")
 
+    # sets up the map pad
     map = curses.newpad(40, 20)
     try:
         map.refresh(0, 0, 0, 26, 23, 79)
