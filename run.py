@@ -239,7 +239,7 @@ def gamescreen(stdscr, character):
     # test code
     for y in range(0, 40):
         for x in range(0, 20):
-            map.addch(a)
+            map.addch("a")
     try:
         map.refresh(0, 0, 0, 26, 23, 79)
     except curses.error:
