@@ -58,6 +58,17 @@ The Dungeon generator follows a series of functions that perform the following l
 
 ![overviewmapgeneration](docs/screenshots/map_generation.png)
 
+### Gamescreen
+
+The game screen layout is based upon the game Angband. Utilising the terminal size limitations of Heroku, the following layout was 
+devised to be the 
+
+![gamescreen](docs/screenshots/gamescreen.png)
+
+### Character stats
+
+character stats are predetermined from a table 
+
 # Credits
 
 Dungeon generator code was created using this as inspiration:
