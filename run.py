@@ -194,9 +194,9 @@ def room_pos_check(xcoord, ycoord, dungeon_width, dungeon_height, room, rooms):
     return xcoord, ycoord
 
 
-def gamescreen(stdscr):
+def gamescreen(stdscr character):
     """ this function loads the main game screen curses overlay."""
-    char_name = "Tazdarwin"
+    char_name = character
     char_health = 9
     char_max_health = 90
     char_mana = 16
@@ -256,6 +256,6 @@ def main():
     """
     character = player_select()
     dungeon_size(character)
-    wrapper(gamescreen)
+    wrapper(gamescreen character)
 
 main()
