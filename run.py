@@ -235,7 +235,7 @@ def gamescreen(stdscr, character):
                            f"{character[12]}{weap_gap}{character[13]}")
 
     # sets up the map pad
-    map = curses.newpad(40, 20)
+    map = curses.newpad(20, 40)
     stdscr.refresh()
     # test code
     for i in range(200):
