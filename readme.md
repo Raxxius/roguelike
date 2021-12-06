@@ -103,10 +103,12 @@ Python curses.resizeterm() Examples:
 
 https://www.programcreek.com/python/example/57430/curses.resizeterm
 
-Curses rectangle at end of the screen issues:
+
+Curses rectangle at end of the screen issues and solutions:
 
 https://stackoverflow.com/questions/52804155/extending-curses-rectangle-box-to-edge-of-terminal-in-python
 
+https://stackoverflow.com/questions/7063128/last-character-of-a-window-in-python-curses 
 
 # Bugs
 
@@ -148,4 +150,4 @@ while the gspread
 - When developing the curses terminal, using the full width (80 columns) caused an error
 ### Solution
 - Update - this is due to writing to the lower right corner of the screen produces an error
-due to pushing the cursor beyond the screen. This can be ignored and the system will work.
+due to pushing the cursor beyond the screen. This error can just be ignored, which while a somewhat clumsy solution, works.
