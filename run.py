@@ -246,7 +246,7 @@ def gamescreen(stdscr, character):
                 pass
 
     
-    map.refresh(0, 0, 0, 26, 23, 78)
+    map.refresh(0, 0, 0, 26, 23, 79)
 
     stdscr.refresh()
     character_stats.refresh()
