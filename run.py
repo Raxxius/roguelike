@@ -239,7 +239,6 @@ def gamescreen(stdscr, character):
     # test code
     for y in range(0, 40):
         for x in range(0, 20):
-        try:
             map.addch(a)
     try:
         map.refresh(0, 0, 0, 26, 23, 79)
@@ -250,6 +249,7 @@ def gamescreen(stdscr, character):
     character_stats.refresh()
     stdscr.getch()
 
+
 def main():
     """
     main function to call other functions
@@ -257,5 +257,6 @@ def main():
     character = player_select()
     dungeon_size(character)
     wrapper(gamescreen, character)
+
 
 main()
