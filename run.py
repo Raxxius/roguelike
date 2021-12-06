@@ -220,8 +220,9 @@ def gamescreen(stdscr, character):
     
     stdscr.clear()
     stdscr.addstr(1, 60, "this is a test")
-    rectangle(stdscr, 0, 0, 23, 79)
-        except curses.error:
+    try:
+        rectangle(stdscr, 0, 0, 23, 79)
+    except curses.error:
             pass
 
     character_stats.clear()
