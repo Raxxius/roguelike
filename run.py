@@ -206,10 +206,10 @@ def gamescreen(stdscr, character):
 
     stdscr.clear()
     # how to use the last character in the window
-    # try:
-    #     rectangle(stdscr, 0, 0, 23, 79)
-    # except curses.error:
-    #    pass
+     try:
+        rectangle(stdscr, 0, 0, 23, 79)
+     except curses.error:
+        pass
 
     # adds the character stats to the characters stats window
     character_stats.clear()
