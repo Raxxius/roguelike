@@ -240,7 +240,10 @@ def gamescreen(stdscr, character):
     # test code
     for y in range(0, 40):
         for x in range(0, 20):
-            map.addch(y,x, ord('a') + (x*x+y*y) % 26)
+            try:
+                map.addch(y,x, ord('a') + (x*x+y*y) % 26)
+            except curses.error:
+                pass
     try:
         map.refresh(0, 0, 0, 26, 23, 79)
     except curses.error:
