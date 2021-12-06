@@ -197,6 +197,8 @@ def mapconversion(character):
     """ takes the character and pulls the map from the google sheet, 
     converts the map to # and .s to be inserted to the map pad """
     print(character)
+    map = SHEET.worksheet(f"{character[0]}_map").get_all_values()
+    print(map)
 
 def gamescreen(stdscr, character):
     """ this function loads the main game screen curses overlay."""
