@@ -77,7 +77,7 @@ def player_select_new(character):
     This function selects a new chracter and adds them to the googlesheet
     """
     print(f"A new hero, {character} enters the fight!")
-    character_info = [character, "alive", 0]
+    character_info = [character, "alive", 1, 16, 10, "", "", "", "", "", "", "Longsword", "chainmail", 16, 10]
     SHEET.worksheet("players").append_row(character_info)
     return character_info
 
