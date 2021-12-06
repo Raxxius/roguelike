@@ -151,3 +151,6 @@ while the gspread
 ### Solution
 - Update - this is due to writing to the lower right corner of the screen produces an error
 due to pushing the cursor beyond the screen. This error can just be ignored, which while a somewhat clumsy solution, works.
+
+### Bug
+- When creating the map pad, only the firs 20 x coordinates were shown

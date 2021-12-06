@@ -240,7 +240,6 @@ def gamescreen(stdscr, character):
     # test code
     for i in range(200):
         for j in range(26):
-            char = chr(67 + j)
             try:
                 map.addstr("#")
             except curses.error:
