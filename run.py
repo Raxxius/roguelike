@@ -220,7 +220,9 @@ def gamescreen(stdscr, character):
     
     stdscr.clear()
     stdscr.addstr(1, 60, "this is a test")
-    rectangle(stdscr, 0, 0, 22, 79)
+    rectangle(stdscr, 0, 0, 23, 79)
+        except curses.error:
+            pass
 
     character_stats.clear()
     health_gap_len = 8 - (len(str(char_health)) + len(str(char_max_health)))
