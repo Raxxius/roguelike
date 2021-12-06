@@ -196,20 +196,6 @@ def room_pos_check(xcoord, ycoord, dungeon_width, dungeon_height, room, rooms):
 
 def gamescreen(stdscr, character):
     """ this function loads the main game screen curses overlay."""
-    char_name = character[0]
-    char_health = character[4]
-    char_max_health = character[14]
-    char_mana = character[5]
-    char_max_mana = character[15]
-    skill_1 = character[6]
-    skill_2 = character[7]
-    skill_3 = character[8]
-    skill_4 = character[9]
-    skill_5 = character[10]
-    skill_6 = character[11]
-    char_weap = character[12]
-    char_armour = character[13]
-
 
     curses.init_pair(1, curses.COLOR_GREEN, curses.COLOR_RED)
     curses.init_pair(2, curses.COLOR_RED, curses.COLOR_GREEN)
@@ -227,27 +213,26 @@ def gamescreen(stdscr, character):
             pass
 
     character_stats.clear()
-    health_gap_len = 8 - (len(str(char_health)) + len(str(char_max_health)))
+    health_gap_len = 8 - (len(str(character[4])) + len(str(character[14])))
     health_gap = " " * health_gap_len
-    weap_gap_len = 11 - (len(str(char_weap)))
+    weap_gap_len = 11 - (len(str(character[12])))
     weap_gap = " " * weap_gap_len
 
     character_stats.addstr(f"{character[0]}\n"
                            "\n"
                            "HEALTH   MANA\n" 
-                           f"{char_health}/{char_max_health}{health_gap}{char_mana}/{char_max_mana}\n"
+                           f"{character[4]}/{character[14]}{health_gap}{character[5]}/{character[15]}\n"
                            "\n"
                            "SKILLS\n"
-                           f"1. {skill_1}\n"
-                           f"2. {skill_2}\n"
-                           f"3. {skill_3}\n"
-                           f"4. {skill_4}\n"
-                           f"5. {skill_5}\n"
-                           f"6. {skill_6}\n"
+                           f"1. {character[6]}\n"
+                           f"2. {character[7]}\n"
+                           f"3. {character[8]}\n"
+                           f"4. {character[9]}\n"
+                           f"5. {character[10]}\n"
+                           f"6. {character[11]}\n"
                            "\n"
                            "WEAPON     ARMOUR\n"
-                           f"{char_weap}{weap_gap}{char_armour}" )
-
+                           f"{character[12]}{weap_gap}{character[13]}" )
 
 
     stdscr.refresh()
