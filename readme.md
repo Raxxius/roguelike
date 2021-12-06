@@ -153,4 +153,7 @@ while the gspread
 due to pushing the cursor beyond the screen. This error can just be ignored, which while a somewhat clumsy solution, works.
 
 ### Bug
-- When creating the map pad, only the firs 20 x coordinates were shown
+- When creating the map pad, only the first 20 x coordinates were shown
+### Solution
+- It appeares that while Curses normally runs y,x coordinate, the pad construction is formed x,y. reversing the map size produced the expected
+output
