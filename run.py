@@ -193,6 +193,10 @@ def room_pos_check(xcoord, ycoord, dungeon_width, dungeon_height, room, rooms):
         ycoord = dungeon_height - rooms[room][2] - 1
     return xcoord, ycoord
 
+def mapconversion(character):
+    """ takes the character and pulls the map from the google sheet, 
+    converts the map to # and .s to be inserted to the map pad """
+    print(character)
 
 def gamescreen(stdscr, character):
     """ this function loads the main game screen curses overlay."""
@@ -206,10 +210,10 @@ def gamescreen(stdscr, character):
 
     stdscr.clear()
     # how to use the last character in the window
-    try:
-        rectangle(stdscr, 0, 0, 23, 79)
-    except curses.error:
-        pass
+    # try:
+    #    rectangle(stdscr, 0, 0, 23, 79)
+    #except curses.error:
+    #    pass
 
     # adds the character stats to the characters stats window
     character_stats.clear()
@@ -234,6 +238,7 @@ def gamescreen(stdscr, character):
                            "WEAPON     ARMOUR\n"
                            f"{character[12]}{weap_gap}{character[13]}")
 
+    mapconversion(character)
     # sets up the map pad
     map = curses.newpad(100, 100)
     stdscr.refresh()
@@ -259,7 +264,9 @@ def main():
     """
     character = player_select()
     dungeon_size(character)
-    wrapper(gamescreen, character)
+    # wrapper(gamescreen, character)
+    
+    mapconversion(character)
 
 
 main()
