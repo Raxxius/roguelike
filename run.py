@@ -198,9 +198,9 @@ def gamescreen(stdscr, character):
     """ this function loads the main game screen curses overlay."""
     char_name = character[0]
     char_health = character[4]
-    char_max_health = 90
+    char_max_health = character[14]
     char_mana = character[5]
-    char_max_mana = 40
+    char_max_mana = character[15]
     skill_1 = character[6]
     skill_2 = character[7]
     skill_3 = character[8]
@@ -220,6 +220,7 @@ def gamescreen(stdscr, character):
     
     stdscr.clear()
     stdscr.addstr(1, 60, "this is a test")
+    #how to use the last character in the window
     try:
         rectangle(stdscr, 0, 0, 23, 79)
     except curses.error:
@@ -231,7 +232,7 @@ def gamescreen(stdscr, character):
     weap_gap_len = 11 - (len(str(char_weap)))
     weap_gap = " " * weap_gap_len
 
-    character_stats.addstr(f"{char_name}\n"
+    character_stats.addstr(f"{character[0]}\n"
                            "\n"
                            "HEALTH   MANA\n" 
                            f"{char_health}/{char_max_health}{health_gap}{char_mana}/{char_max_mana}\n"
