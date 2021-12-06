@@ -206,11 +206,11 @@ def gamescreen(stdscr, character):
     
     stdscr.clear()
     stdscr.addstr(1, 60, "this is a test")
-    #how to use the last character in the window
+    # how to use the last character in the window
     try:
         rectangle(stdscr, 0, 0, 23, 79)
     except curses.error:
-            pass
+        pass
 
     character_stats.clear()
     health_gap_len = 8 - (len(str(character[4])) + len(str(character[14])))
@@ -232,7 +232,7 @@ def gamescreen(stdscr, character):
                            f"6. {character[11]}\n"
                            "\n"
                            "WEAPON     ARMOUR\n"
-                           f"{character[12]}{weap_gap}{character[13]}" )
+                           f"{character[12]}{weap_gap}{character[13]}")
 
 
     stdscr.refresh()
