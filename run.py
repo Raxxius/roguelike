@@ -203,7 +203,7 @@ def gamescreen(stdscr, character):
     RED_GREEN = curses.color_pair(2)
 
     character_stats = curses.newwin(21, 20, 0, 0)
-    
+
     stdscr.clear()
     stdscr.addstr(1, 60, "this is a test")
     # how to use the last character in the window
@@ -220,7 +220,7 @@ def gamescreen(stdscr, character):
 
     character_stats.addstr(f"{character[0]}\n"
                            "\n"
-                           "HEALTH   MANA\n" 
+                           "HEALTH   MANA\n"
                            f"{character[4]}/{character[14]}{health_gap}{character[5]}/{character[15]}\n"
                            "\n"
                            "SKILLS\n"
@@ -234,6 +234,11 @@ def gamescreen(stdscr, character):
                            "WEAPON     ARMOUR\n"
                            f"{character[12]}{weap_gap}{character[13]}")
 
+    map = curses.newpad(40, 20)
+    try:
+        map.refresh(0, 0, 0, 26, 23, 79)
+    except curses.error:
+        pass
 
     stdscr.refresh()
     character_stats.refresh()
