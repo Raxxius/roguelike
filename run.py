@@ -77,9 +77,9 @@ def dungeon_size(character):
         
         position_rooms(room_number, dungeon_map, x_size, y_size)
         
-        SHEET.add_worksheet(title=f"{character[0]}_map", rows=x_size, cols=y_size)
+        SHEET.add_worksheet(title=f"{character[0]}_map", rows=y_size, cols=x_size)
         dungeon_list = list(dungeon_map.values())
-        dungeon_passover = [dungeon_list[x:x+20] for x in range(0, len(dungeon_list), 20)]
+        dungeon_passover = [dungeon_list[x:x+x_size] for x in range(0, len(dungeon_list), x_size)]
         SHEET.worksheet(title=f"{character[0]}_map").update('A1', dungeon_passover)
 
 
