@@ -261,9 +261,29 @@ def room_pos_check(xcoord, ycoord, dungeon_width, dungeon_height, room, rooms):
         ycoord = dungeon_height - rooms[room][2] - 1
     return xcoord, ycoord
 
+
+def add_player():
+    """
+    add player to the map
+    """
+
+
+def add_monsters():
+    """
+    add monster to the map
+    """
+
+
+def add_loot():
+    """
+    add loot to the map
+    """
+
+
 """
 Gameplay functions
 """
+
 
 def mapconversion(character):
     """ takes the character and pulls the map from the google sheet, 
@@ -278,6 +298,43 @@ def mapconversion(character):
             else:
                 newmap.append(".")
     return(newmap)
+
+
+def ignore_turn():
+    """
+    This function is called to let the user know that they can't pass through a wall
+    and reset the turn without advancing the turn counter
+    """
+
+
+def combat():
+    """
+    The combat module selects random numbers and creates...
+    """
+
+
+def move():
+    """
+    moves the character and then the monsters. 
+    """
+
+
+def loot():
+    """
+    loot module
+    """
+
+
+def win():
+    """
+    module to update stats etc when player wins
+    """
+
+
+def dead():
+    """
+    updates stats based on character dying
+    """
 
 
 def main():
