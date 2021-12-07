@@ -78,7 +78,7 @@ def dungeon_size(character):
         room_number = init_rooms(random.randint(8, 12))
         position_rooms(room_number, dungeon_map, x_size, y_size)
         
-        
+
         SHEET.add_worksheet(title=f"{character[0]}_map", rows=y_size, cols=x_size)
         dungeon_list = list(dungeon_map.values())
         dungeon_passover = [dungeon_list[x:x+x_size] for x in range(0, len(dungeon_list), x_size)]
@@ -233,6 +233,14 @@ def position_rooms(rooms, dungeon_map, dungeon_width, dungeon_height):
     This function puts the rooms generated in the init_rooms function
     into the dungeon, rooms are added by changing the "wall" value in the
     dungeon_map dict to "room {number}".
+
+    Rooms are added in a semi-randomised way - room 1 is the spawn room,
+    and will be added near to the upper left of the map (0,0).
+
+    the last room (containing the boss) is added to be near the lower 
+    right of the map.
+
+    Rooms are populated in quarters. 
     """
 
     for room in rooms:
