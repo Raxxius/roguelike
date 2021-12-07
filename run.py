@@ -199,9 +199,6 @@ def mapconversion(character):
     converts the map to # and .s to be inserted to the map pad """
     print(character)
     map = SHEET.worksheet(f"{character[0]}_map").get_all_values()
-    dungeon_x = len(map[0])
-    dungeon_y = len(map)
-    print(map[0][0])
 
     for y in range(len(map[0])):
         for x in range(len(map)):
@@ -211,8 +208,8 @@ def mapconversion(character):
                 map[x][y] = "."
 
     if map[0][0] == "wall":
-        print("that's a fine wall you got")
     return(map)
+
 
 def gamescreen(stdscr, character):
     """ this function loads the main game screen curses overlay."""
