@@ -255,7 +255,10 @@ def gamescreen(stdscr, character):
     stdscr.refresh()
     # test code
     for i in range(len(padmap)):
-        map.addstr(padmap[i])
+        try: 
+            map.addstr(padmap[i])
+        except curses.error:
+            pass
 
     
     map.refresh(0, 0, 0, 26, 23, 79)
