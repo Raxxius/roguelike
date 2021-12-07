@@ -77,7 +77,7 @@ def player_select_new(character):
     This function selects a new chracter and adds them to the googlesheet
     """
     print(f"A new hero, {character} enters the fight!")
-    character_info = [character, "alive", 1, 16, 10, "", "", "", "", "", "", "Longsword", "chainmail", 16, 10]
+    character_info = [character, "alive", 1, 16, 10, "", "", "", "", "", "", "Shortsword", "Chainmail", 16, 10]
     SHEET.worksheet("players").append_row(character_info)
     return character_info
 
@@ -198,6 +198,19 @@ def mapconversion(character):
     converts the map to # and .s to be inserted to the map pad """
     print(character)
     map = SHEET.worksheet(f"{character[0]}_map").get_all_values()
+    dungeon_x = len(map[0])
+    dungeon_y = len(map)
+    print(map[0][0])
+
+    for y in range(4):
+        for x in range(4):
+            if str(map[x][y]) == "wall":
+                map[x][y] = "#"
+            else:
+                map[x][y] = "."
+
+    if map[0][0] == "wall":
+        print("that's a fine wall you got")
     print(map)
 
 def gamescreen(stdscr, character):
@@ -214,7 +227,7 @@ def gamescreen(stdscr, character):
     # how to use the last character in the window
     # try:
     #    rectangle(stdscr, 0, 0, 23, 79)
-    #except curses.error:
+    # except curses.error:
     #    pass
 
     # adds the character stats to the characters stats window
