@@ -199,15 +199,15 @@ def mapconversion(character):
     converts the map to # and .s to be inserted to the map pad """
     print(character)
     map = SHEET.worksheet(f"{character[0]}_map").get_all_values()
-
+    newmap = []
     for y in range(len(map[0])):
         for x in range(len(map)):
             if str(map[x][y]) == "wall":
-                map[x][y] = "#"
+                newmap.append() = "#"
             else:
-                map[x][y] = "."
+                newmap.append() = "."
 
-    return(map)
+    return(newmap)
 
 
 def gamescreen(stdscr, character):
@@ -255,8 +255,7 @@ def gamescreen(stdscr, character):
     map = curses.newpad(20, 40)
     stdscr.refresh()
     # test code
-    print(padmap)
-    # map.addstr(padmap)
+    map.addstr(padmap)
 
     
     map.refresh(0, 0, 0, 26, 23, 79)
@@ -272,7 +271,7 @@ def main():
     """
     character = player_select()
     dungeon_size(character)
-    wrapper(gamescreen, character)
+    #wrapper(gamescreen, character)
     
     mapconversion(character)
 
