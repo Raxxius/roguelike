@@ -57,24 +57,30 @@ def dungeon_size(character):
         sizef = size[0]
         if "s" in sizef.lower():
             print("Creating a small dungeon")
-
-            dungeon_map = init_dungeon(40, 20)
-            room_number = init_rooms(random.randint(8, 12))
-            position_rooms(room_number, dungeon_map, 40, 20)
-            SHEET.add_worksheet(title=f"{character[0]}_map", rows="40", cols="20")
-            dungeon_list = list(dungeon_map.values())
-            dungeon_passover = [dungeon_list[x:x+20] for x in range(0, len(dungeon_list), 20)]
-            SHEET.worksheet(title=f"{character[0]}_map").update('A1', dungeon_passover)
+            x_size = 40
+            y_size = 20
         elif "m" in sizef.lower():
             print("Creating a medium dungeon")
-            init_dungeon(50, 50)
-            init_rooms(random.randint(20, 30))
+            x_size = 50
+            y_size = 50
         elif "l" in sizef.lower():
             print("Creating a large dungeon")
-            init_dungeon(100, 100)
-            init_rooms(random.randint(50, 70))
+            x_size = 100
+            y_size = 100
         else:
             print("that's not a valid size you muppet")
+            dungeon_size(character)
+
+        dungeon_map = init_dungeon(x_size, y_size)
+        
+        room_number = init_rooms(random.randint(8, 12))
+        
+        position_rooms(room_number, dungeon_map, x_size, y_size)
+        
+        SHEET.add_worksheet(title=f"{character[0]}_map", rows=x_size, cols=y_size)
+        dungeon_list = list(dungeon_map.values())
+        dungeon_passover = [dungeon_list[x:x+20] for x in range(0, len(dungeon_list), 20)]
+        SHEET.worksheet(title=f"{character[0]}_map").update('A1', dungeon_passover)
 
 
 def gamescreen(stdscr, character):
