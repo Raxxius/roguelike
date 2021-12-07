@@ -71,11 +71,13 @@ def dungeon_size(character):
             print("that's not a valid size you muppet")
             dungeon_size(character)
 
+        # create a blank dungeon map
         dungeon_map = init_dungeon(x_size, y_size)
         
+        # add rooms to the dungeon map
         room_number = init_rooms(random.randint(8, 12))
-        
         position_rooms(room_number, dungeon_map, x_size, y_size)
+        
         
         SHEET.add_worksheet(title=f"{character[0]}_map", rows=y_size, cols=x_size)
         dungeon_list = list(dungeon_map.values())
