@@ -155,5 +155,4 @@ due to pushing the cursor beyond the screen. This error can just be ignored, whi
 ### Bug
 - When creating the map pad, only the first 20 x coordinates were shown
 ### Solution
-- It appeares that while Curses normally runs y,x coordinate, the pad construction is formed x,y. reversing the map size produced the expected
-output
+- This wasn't actually a bug but a data input error, the first 20 x coordinates were shown because the map is 20 x coordinates long.
