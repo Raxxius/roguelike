@@ -203,10 +203,9 @@ def mapconversion(character):
     for y in range(len(map[0])):
         for x in range(len(map)):
             if str(map[x][y]) == "wall":
-                newmap.append() = "#"
+                newmap.append("#")
             else:
-                newmap.append() = "."
-
+                newmap.append(".")
     return(newmap)
 
 
@@ -255,7 +254,8 @@ def gamescreen(stdscr, character):
     map = curses.newpad(20, 40)
     stdscr.refresh()
     # test code
-    map.addstr(padmap)
+    for i in padmap:
+        map.addstr(padmap[i])
 
     
     map.refresh(0, 0, 0, 26, 23, 79)
@@ -271,9 +271,7 @@ def main():
     """
     character = player_select()
     dungeon_size(character)
-    #wrapper(gamescreen, character)
-    
-    mapconversion(character)
+    wrapper(gamescreen, character)
 
 
 main()
