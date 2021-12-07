@@ -193,6 +193,7 @@ def room_pos_check(xcoord, ycoord, dungeon_width, dungeon_height, room, rooms):
         ycoord = dungeon_height - rooms[room][2] - 1
     return xcoord, ycoord
 
+
 def mapconversion(character):
     """ takes the character and pulls the map from the google sheet, 
     converts the map to # and .s to be inserted to the map pad """
@@ -253,17 +254,13 @@ def gamescreen(stdscr, character):
                            "WEAPON     ARMOUR\n"
                            f"{character[12]}{weap_gap}{character[13]}")
 
-    mapconversion(character)
+    padmap = mapconversion(character)
     # sets up the map pad
-    map = curses.newpad(100, 100)
+    map = curses.newpad(20, 40)
     stdscr.refresh()
     # test code
-    for i in range(200):
-        for j in range(26):
-            try:
-                map.addstr("#")
-            except curses.error:
-                pass
+    print(padmap)
+    # map.addstr(padmap)
 
     
     map.refresh(0, 0, 0, 26, 23, 79)
@@ -279,7 +276,7 @@ def main():
     """
     character = player_select()
     dungeon_size(character)
-    # wrapper(gamescreen, character)
+    wrapper(gamescreen, character)
     
     mapconversion(character)
 
