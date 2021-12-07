@@ -202,8 +202,8 @@ def mapconversion(character):
     dungeon_y = len(map)
     print(map[0][0])
 
-    for y in range(4):
-        for x in range(4):
+    for y in range(len(map[0])):
+        for x in range(len(map)):
             if str(map[x][y]) == "wall":
                 map[x][y] = "#"
             else:
