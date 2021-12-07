@@ -207,7 +207,6 @@ def mapconversion(character):
             else:
                 map[x][y] = "."
 
-    if map[0][0] == "wall":
     return(map)
 
 
