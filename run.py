@@ -211,7 +211,7 @@ def mapconversion(character):
 
     if map[0][0] == "wall":
         print("that's a fine wall you got")
-    print(map)
+    return(map)
 
 def gamescreen(stdscr, character):
     """ this function loads the main game screen curses overlay."""
