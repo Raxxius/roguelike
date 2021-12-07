@@ -18,6 +18,10 @@ GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('roguelike')
 
 
+"""
+Main flow functions
+"""
+
 def player_select():
     """
     This function reads the google sheet for characters
@@ -35,6 +39,107 @@ def player_select():
             dead_characters.append(player_number[0])
     character = opening_screen(alive_characters, dead_characters)
     return character
+
+
+def dungeon_size(character):
+    """
+    This function decides the size of the map and runs all
+    the individual dungeon generation functions
+    if a map already exists for the character it will load that instead
+    """
+
+    existing_map = str(SHEET.worksheets())
+    character_map = f"'{character[0]}_map'"
+    if character_map in existing_map:
+        print(f"{character[0]} is already in a dungeon. Loading the dungeon.")
+    else:
+        print("defining dungeon size...\n")
+        size = input("how large would you like the dungeon to be? S, M or L?\n")
+        sizef = size[0]
+        if "s" in sizef.lower():
+            print("Creating a small dungeon")
+
+            dungeon_map = init_dungeon(20, 40)
+            room_number = init_rooms(random.randint(8, 12))
+            position_rooms(room_number, dungeon_map, 20, 40)
+            SHEET.add_worksheet(title=f"{character[0]}_map", rows="40", cols="20")
+            dungeon_list = list(dungeon_map.values())
+            dungeon_passover = [dungeon_list[x:x+20] for x in range(0, len(dungeon_list), 20)]
+            SHEET.worksheet(title=f"{character[0]}_map").update('A1', dungeon_passover)
+        elif "m" in sizef.lower():
+            print("Creating a medium dungeon")
+            init_dungeon(50, 50)
+            init_rooms(random.randint(20, 30))
+        elif "l" in sizef.lower():
+            print("Creating a large dungeon")
+            init_dungeon(100, 100)
+            init_rooms(random.randint(50, 70))
+        else:
+            print("that's not a valid size you muppet")
+
+
+def gamescreen(stdscr, character):
+    """ this function loads the main game screen curses overlay."""
+
+    curses.init_pair(1, curses.COLOR_GREEN, curses.COLOR_RED)
+    curses.init_pair(2, curses.COLOR_RED, curses.COLOR_GREEN)
+    GREEN_RED = curses.color_pair(1)
+    RED_GREEN = curses.color_pair(2)
+
+    character_stats = curses.newwin(21, 20, 0, 0)
+
+    stdscr.clear()
+    # how to use the last character in the window
+    # try:
+    #    rectangle(stdscr, 0, 0, 23, 79)
+    # except curses.error:
+    #    pass
+
+    # adds the character stats to the characters stats window
+    character_stats.clear()
+    health_gap_len = 8 - (len(str(character[4])) + len(str(character[14])))
+    health_gap = " " * health_gap_len
+    weap_gap_len = 11 - (len(str(character[12])))
+    weap_gap = " " * weap_gap_len
+
+    character_stats.addstr(f"{character[0]}\n"
+                           "\n"
+                           "HEALTH   MANA\n"
+                           f"{character[4]}/{character[14]}{health_gap}{character[5]}/{character[15]}\n"
+                           "\n"
+                           "SKILLS\n"
+                           f"1. {character[6]}\n"
+                           f"2. {character[7]}\n"
+                           f"3. {character[8]}\n"
+                           f"4. {character[9]}\n"
+                           f"5. {character[10]}\n"
+                           f"6. {character[11]}\n"
+                           "\n"
+                           "WEAPON     ARMOUR\n"
+                           f"{character[12]}{weap_gap}{character[13]}")
+
+    padmap = mapconversion(character)
+    # sets up the map pad
+    map = curses.newpad(40, 20)
+    stdscr.refresh()
+    # test code
+    for i in range(len(padmap)):
+        try: 
+            map.addstr(padmap[i])
+        except curses.error:
+            pass
+
+    
+    map.refresh(0, 0, 0, 26, 23, 79)
+
+    stdscr.refresh()
+    character_stats.refresh()
+    stdscr.getch()
+
+
+"""
+Game generation functions
+"""
 
 
 def opening_screen(alive_characters, dead_characters):
@@ -80,43 +185,6 @@ def player_select_new(character):
     character_info = [character, "alive", 1, 16, 10, "", "", "", "", "", "", "Shortsword", "Chainmail", 16, 10]
     SHEET.worksheet("players").append_row(character_info)
     return character_info
-
-
-def dungeon_size(character):
-    """
-    This function decides the size of the map and runs all
-    the individual dungeon generation functions
-    if a map already exists for the character it will load that instead
-    """
-
-    existing_map = str(SHEET.worksheets())
-    character_map = f"'{character[0]}_map'"
-    if character_map in existing_map:
-        print(f"{character[0]} is already in a dungeon. Loading the dungeon.")
-    else:
-        print("defining dungeon size...\n")
-        size = input("how large would you like the dungeon to be? S, M or L?\n")
-        sizef = size[0]
-        if "s" in sizef.lower():
-            print("Creating a small dungeon")
-
-            dungeon_map = init_dungeon(20, 40)
-            room_number = init_rooms(random.randint(8, 12))
-            position_rooms(room_number, dungeon_map, 20, 40)
-            SHEET.add_worksheet(title=f"{character[0]}_map", rows="40", cols="20")
-            dungeon_list = list(dungeon_map.values())
-            dungeon_passover = [dungeon_list[x:x+20] for x in range(0, len(dungeon_list), 20)]
-            SHEET.worksheet(title=f"{character[0]}_map").update('A1', dungeon_passover)
-        elif "m" in sizef.lower():
-            print("Creating a medium dungeon")
-            init_dungeon(50, 50)
-            init_rooms(random.randint(20, 30))
-        elif "l" in sizef.lower():
-            print("Creating a large dungeon")
-            init_dungeon(100, 100)
-            init_rooms(random.randint(50, 70))
-        else:
-            print("that's not a valid size you muppet")
 
 
 def init_dungeon(d_width, d_height):
@@ -193,6 +261,9 @@ def room_pos_check(xcoord, ycoord, dungeon_width, dungeon_height, room, rooms):
         ycoord = dungeon_height - rooms[room][2] - 1
     return xcoord, ycoord
 
+"""
+Gameplay functions
+"""
 
 def mapconversion(character):
     """ takes the character and pulls the map from the google sheet, 
@@ -207,65 +278,6 @@ def mapconversion(character):
             else:
                 newmap.append(".")
     return(newmap)
-
-
-def gamescreen(stdscr, character):
-    """ this function loads the main game screen curses overlay."""
-
-    curses.init_pair(1, curses.COLOR_GREEN, curses.COLOR_RED)
-    curses.init_pair(2, curses.COLOR_RED, curses.COLOR_GREEN)
-    GREEN_RED = curses.color_pair(1)
-    RED_GREEN = curses.color_pair(2)
-
-    character_stats = curses.newwin(21, 20, 0, 0)
-
-    stdscr.clear()
-    # how to use the last character in the window
-    # try:
-    #    rectangle(stdscr, 0, 0, 23, 79)
-    # except curses.error:
-    #    pass
-
-    # adds the character stats to the characters stats window
-    character_stats.clear()
-    health_gap_len = 8 - (len(str(character[4])) + len(str(character[14])))
-    health_gap = " " * health_gap_len
-    weap_gap_len = 11 - (len(str(character[12])))
-    weap_gap = " " * weap_gap_len
-
-    character_stats.addstr(f"{character[0]}\n"
-                           "\n"
-                           "HEALTH   MANA\n"
-                           f"{character[4]}/{character[14]}{health_gap}{character[5]}/{character[15]}\n"
-                           "\n"
-                           "SKILLS\n"
-                           f"1. {character[6]}\n"
-                           f"2. {character[7]}\n"
-                           f"3. {character[8]}\n"
-                           f"4. {character[9]}\n"
-                           f"5. {character[10]}\n"
-                           f"6. {character[11]}\n"
-                           "\n"
-                           "WEAPON     ARMOUR\n"
-                           f"{character[12]}{weap_gap}{character[13]}")
-
-    padmap = mapconversion(character)
-    # sets up the map pad
-    map = curses.newpad(40, 20)
-    stdscr.refresh()
-    # test code
-    for i in range(len(padmap)):
-        try: 
-            map.addstr(padmap[i])
-        except curses.error:
-            pass
-
-    
-    map.refresh(0, 0, 0, 26, 23, 79)
-
-    stdscr.refresh()
-    character_stats.refresh()
-    stdscr.getch()
 
 
 def main():
