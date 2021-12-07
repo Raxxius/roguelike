@@ -254,7 +254,7 @@ def gamescreen(stdscr, character):
     map = curses.newpad(20, 40)
     stdscr.refresh()
     # test code
-    for i in padmap:
+    for i in range(len(padmap)):
         map.addstr(padmap[i])
 
     
