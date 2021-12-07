@@ -1,9 +1,9 @@
 import random
-import gspread
 import curses
-import time
 from curses import wrapper
-from curses.textpad import rectangle
+import gspread
+# import time
+# from curses.textpad import rectangle
 from google.oauth2.service_account import Credentials
 
 SCOPE = [
@@ -18,9 +18,8 @@ GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('roguelike')
 
 
-"""
-Main flow functions
-"""
+# Main flow functions
+
 
 def player_select():
     """
@@ -59,9 +58,9 @@ def dungeon_size(character):
         if "s" in sizef.lower():
             print("Creating a small dungeon")
 
-            dungeon_map = init_dungeon(20, 40)
+            dungeon_map = init_dungeon(40, 20)
             room_number = init_rooms(random.randint(8, 12))
-            position_rooms(room_number, dungeon_map, 20, 40)
+            position_rooms(room_number, dungeon_map, 40, 20)
             SHEET.add_worksheet(title=f"{character[0]}_map", rows="40", cols="20")
             dungeon_list = list(dungeon_map.values())
             dungeon_passover = [dungeon_list[x:x+20] for x in range(0, len(dungeon_list), 20)]
@@ -124,12 +123,11 @@ def gamescreen(stdscr, character):
     stdscr.refresh()
     # test code
     for i in range(len(padmap)):
-        try: 
+        try:
             gamemap.addstr(padmap[i])
         except curses.error:
             pass
 
-    
     gamemap.refresh(0, 0, 0, 26, 23, 79)
 
     stdscr.refresh()
@@ -137,9 +135,7 @@ def gamescreen(stdscr, character):
     stdscr.getch()
 
 
-"""
-Game generation functions
-"""
+# Game generation functions
 
 
 def opening_screen(alive_characters, dead_characters):
@@ -280,20 +276,18 @@ def add_loot():
     """
 
 
-"""
-Gameplay functions
-"""
+# Gameplay functions
 
 
 def mapconversion(character):
-    """ takes the character and pulls the map from the google sheet, 
+    """ takes the character and pulls the map from the google sheet,
     converts the map to # and .s to be inserted to the map pad """
     print(character)
-    map = SHEET.worksheet(f"{character[0]}_map").get_all_values()
-    newmap = []  
-    for x in range(len(map)):
-        for y in range(len(map[0])):
-            if str(map[x][y]) == "wall":
+    coremap = SHEET.worksheet(f"{character[0]}_map").get_all_values()
+    newmap = []
+    for x_coord in range(len(coremap)):
+        for y_coord in range(len(coremap[0])):
+            if str(coremap[x_coord][y_coord]) == "wall":
                 newmap.append("#")
             else:
                 newmap.append(".")
@@ -315,7 +309,7 @@ def combat():
 
 def move():
     """
-    moves the character and then the monsters. 
+    moves the character and then the monsters.
     """
 
 
