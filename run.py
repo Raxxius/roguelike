@@ -199,9 +199,9 @@ def mapconversion(character):
     converts the map to # and .s to be inserted to the map pad """
     print(character)
     map = SHEET.worksheet(f"{character[0]}_map").get_all_values()
-    newmap = []
-    for y in range(len(map[0])):
-        for x in range(len(map)):
+    newmap = []  
+    for x in range(len(map)):
+        for y in range(len(map[0])):
             if str(map[x][y]) == "wall":
                 newmap.append("#")
             else:
@@ -251,7 +251,7 @@ def gamescreen(stdscr, character):
 
     padmap = mapconversion(character)
     # sets up the map pad
-    map = curses.newpad(20, 40)
+    map = curses.newpad(40, 20)
     stdscr.refresh()
     # test code
     for i in range(len(padmap)):
