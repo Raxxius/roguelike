@@ -42,7 +42,7 @@ The components of the games code are broken down to smaller individual component
 
 Overall program loop is as follows:
 
-![overviewflow](docs/screenshots/function_flow.png)
+![overviewflow](docs/screenshots/rougelike_function_flow.png)
 
 ### Character Select
 
