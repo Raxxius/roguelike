@@ -21,7 +21,7 @@ SHEET = GSPREAD_CLIENT.open('roguelike')
 # Main flow functions
 
 
-def player_select():
+def player_select(stdscr):
     """
     This function reads the google sheet for characters
     with the status = "alive", and allows the players
@@ -41,7 +41,7 @@ def player_select():
             alive_characters.append(player_number[0])
         elif player_number[1] == "dead":
             dead_characters.append(player_number[0])
-    character = opening_screen(alive_characters, dead_characters)
+    character = opening_screen(stdscr, alive_characters, dead_characters)
     return character
 
 
@@ -151,7 +151,7 @@ def gamescreen(character):
 # Game generation functions
 
 
-def opening_screen(alive_characters, dead_characters):
+def opening_screen(stdscr, alive_characters, dead_characters):
     """
     Checks to see if a character already exists in the database
     if the players selects a name that already exists but is dead, the user
@@ -162,12 +162,14 @@ def opening_screen(alive_characters, dead_characters):
     curses.init_pair(1, curses.COLOR_WHITE, curses.COLOR_BLACK)
     WHITE_BLACK = curses.color_pair(1)
 
-    stdscr.addstr (3, 5, f'''
-    Welcome to the roguelike dungeon
-    The following characters are alive
-    {alive_characters}
-    you can select one of these characters or create a new one by typing a name
-    ''')
+    stdscr.addstr(2,10,"Welcome to the roguelike dungeon")
+    stdscr.addstr(3,10,"The following characters are alive")
+    stdscr.addstr(4,10,f"{alive_characters}")
+    stdscr.addstr(5,10,"you can select one of these characters or create a new one by typing a name")
+
+    stdscr.refresh()
+
+
     """
     print(f'''
     Welcome to the roguelike dungeon
@@ -369,7 +371,7 @@ def main(stdscr):
     """
     main function to call other functions
     """
-    character = player_select()
+    character = player_select(stdscr)
     dungeon_size(character)
     gamescreen(character)
 
