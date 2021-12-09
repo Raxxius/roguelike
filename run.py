@@ -94,7 +94,16 @@ def dungeon_size(stdscr, character):
         room_number = init_rooms(random.randint(8, 12))
         position_rooms(room_number, dungeon_map, x_size, y_size)
         
+        # add player to room 1
+        add_player(room_number, dungeon_map, x_size, y_size)
 
+        # add monsters to random rooms, and boss to final room
+        add_monsters(room_number, dungeon_map, x_size, y_size)
+
+        # add loot to random rooms
+        add_loot(room_number, dungeon_map, x_size, y_size)
+
+        #upload new map to google sheets
         SHEET.add_worksheet(title=f"{character[0]}_map", rows=y_size, cols=x_size)
         dungeon_list = list(dungeon_map.values())
         dungeon_passover = [dungeon_list[x:x+x_size] for x in range(0, len(dungeon_list), x_size)]
