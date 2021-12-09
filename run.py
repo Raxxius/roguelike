@@ -163,21 +163,13 @@ def opening_screen(stdscr, alive_characters, dead_characters):
     WHITE_BLACK = curses.color_pair(1)
 
     stdscr.addstr(2,10,"Welcome to the roguelike dungeon")
-    stdscr.addstr(3,10,"The following characters are alive")
+    stdscr.addstr(3,10,"The following characters are alive:")
     stdscr.addstr(4,10,f"{alive_characters}")
-    stdscr.addstr(5,10,"you can select one of these characters or create a new one by typing a name")
+    stdscr.addstr(5,10,"you can select one of these characters or create a"
+    stdscr.addstr(6,10, "new one by typing a name")
 
     stdscr.refresh()
 
-
-    """
-    print(f'''
-    Welcome to the roguelike dungeon
-    The following characters are alive
-    {alive_characters}
-    you can select one of these characters or create a new one by typing a name
-    ''')
-    """
     select_character = input("Type the name of your character\n")
     if select_character in alive_characters:
         character_info = player_select_existing(select_character)
