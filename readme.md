@@ -161,3 +161,8 @@ due to pushing the cursor beyond the screen. This error can just be ignored, whi
 - When switching to curses there was an issue with a space being added to the end of the characters.
 ### Solution
 - Addition of .strip() to remove the space afterwards made the code work.
+
+### Bug
+- when creating a single character window, it would not accept keypresses.
+### Solution
+- This was caused by the cursor taking up a position in the window, adding an additional character made the window behave as expected.
