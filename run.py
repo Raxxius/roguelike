@@ -41,7 +41,7 @@ def player_select():
             alive_characters.append(player_number[0])
         elif player_number[1] == "dead":
             dead_characters.append(player_number[0])
-    character = wrapper(opening_screen(alive_characters, dead_characters))
+    character = opening_screen(alive_characters, dead_characters)
     return character
 
 
@@ -368,7 +368,7 @@ def main():
     """
     main function to call other functions
     """
-    character = player_select()
+    character = wrapper(player_select())
     dungeon_size(character)
     wrapper(gamescreen, character)
 
