@@ -81,7 +81,7 @@ def dungeon_size(stdscr, character):
         else:
             stdscr.addstr(7, 10, f"{size} is not a valid size you muppet")
             stdscr.addstr(9, 10, "please input a valid size")
-            stdscr.addstr(8, 10, "press a key to continue")
+            stdscr.addstr(11, 10, "press a key to continue")
             stdscr.getch()
             dungeon_size(stdscr, character)
 
@@ -236,13 +236,14 @@ def init_dungeon(d_width, d_height):
     This will create a rectangle with all squares set to wall(True).
     """
 
-    print("Generating dungeon map...")
+    pstdscr.addstr(11, 10,"Generating dungeon map...")
     dungeon_map = {}
     for ycoord in range(d_height):
         for xcoord in range(d_width):
             # creates a dungeon tile with an x,y coord and sets True.
             dungeon_map[xcoord, ycoord] = "wall"
-    print("map generated!")
+    stdscr.addstr(13, 10,"map generated! Press a key to continue")
+    stdscr.getch()
     return dungeon_map
 
 
