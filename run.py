@@ -90,7 +90,7 @@ def dungeon_size(character):
         SHEET.worksheet(title=f"{character[0]}_map").update('A1', dungeon_passover)
 
 
-def gamescreen(stdscr, character):
+def gamescreen(character):
     """ this function loads the main game screen curses overlay."""
 
     curses.init_pair(1, curses.COLOR_GREEN, curses.COLOR_RED)
@@ -157,10 +157,11 @@ def opening_screen(alive_characters, dead_characters):
     if the players selects a name that already exists but is dead, the user
     will be asked to pick another character.
     """
+
+
     curses.init_pair(1, curses.COLOR_WHITE, curses.COLOR_BLACK)
     WHITE_BLACK = curse.init_pair(1)
 
- 
     stdscr.addstr (3, 5, f'''
     Welcome to the roguelike dungeon
     The following characters are alive
@@ -364,7 +365,7 @@ def dead():
     """
 
 
-def main():
+def main(stdscr):
     """
     main function to call other functions
     """
