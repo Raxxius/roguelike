@@ -160,7 +160,7 @@ def opening_screen(alive_characters, dead_characters):
 
 
     curses.init_pair(1, curses.COLOR_WHITE, curses.COLOR_BLACK)
-    WHITE_BLACK = curses.init_pair(1)
+    WHITE_BLACK = curses.color_pair(1)
 
     stdscr.addstr (3, 5, f'''
     Welcome to the roguelike dungeon
