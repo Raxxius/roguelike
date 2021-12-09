@@ -368,9 +368,9 @@ def main():
     """
     main function to call other functions
     """
-    character = wrapper(player_select())
+    character = player_select()
     dungeon_size(character)
-    wrapper(gamescreen, character)
+    gamescreen(character)
 
 
-main()
+wrapper(main)
