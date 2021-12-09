@@ -174,18 +174,26 @@ def opening_screen(stdscr, alive_characters, dead_characters):
 
     character_scr = Textbox(curses.newwin(1, 23, 12, 10))
 
-    select_character = character_scr.edit().strip()
+    select_character = character_scr.edit().strip().capitalize()
 
     if select_character in alive_characters:
         character_info = player_select_existing(select_character)
         stdscr.addstr(13, 10, f"{select_character} returns to fight!")
         stdscr.addstr(14, 10, "Press a key to continue")
+        stdscr.getch()
+
     elif select_character in dead_characters:
-        print(f"Sorry, {select_character} is dead! please select another name.")
-        opening_screen(alive_characters, dead_characters)
+        stdscr.addstr(13, 10, f"Sorry, {select_character} is dead! please select another name.")
+        stdscr.addstr(14, 10, "Press a key to continue")
+        stdscr.getch()
+        stdscr.clear()
+        opening_screen(stdscr, alive_characters, dead_characters)
+
     else:
         character_info = player_select_new(select_character)
-    
+        stdscr.addstr(13, 10, f"{select_character} enters the dungeon!")
+        stdscr.addstr(14, 10, "Press a key to continue")
+        stdscr.getch()
 
     return character_info
 
@@ -195,7 +203,6 @@ def player_select_existing(character):
     This function selects a character from the googlesheet and loads
     their stats
     """
-    print(f"{character} returns to fight!")
     for player_x in SHEET.worksheet("players").get_all_values():
         if player_x[0] == character:
             character_info = player_x
