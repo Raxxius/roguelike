@@ -27,8 +27,7 @@ def player_select():
     with the status = "alive", and allows the players
     to select an alive character or choose a new one
     """
-    # curses.init_pair(1, curses.COLOR_WHITE, curses.COLOR_BLACK)
-    # WHITE_BLACK = curse.init_pair(1)
+
 
     players = SHEET.worksheet("players")
     player_data = players.get_all_values()
@@ -37,14 +36,12 @@ def player_select():
 
     # Sets up the title screen
 
-    # stdscr.clear()
-
     for player_number in player_data:
         if player_number[1] == "alive":
             alive_characters.append(player_number[0])
         elif player_number[1] == "dead":
             dead_characters.append(player_number[0])
-    character = opening_screen(alive_characters, dead_characters)
+    character = wrapper(opening_screen(alive_characters, dead_characters))
     return character
 
 
@@ -160,8 +157,10 @@ def opening_screen(alive_characters, dead_characters):
     if the players selects a name that already exists but is dead, the user
     will be asked to pick another character.
     """
+    curses.init_pair(1, curses.COLOR_WHITE, curses.COLOR_BLACK)
+    WHITE_BLACK = curse.init_pair(1)
 
-    """
+ 
     stdscr.addstr (3, 5, f'''
     Welcome to the roguelike dungeon
     The following characters are alive
@@ -175,6 +174,7 @@ def opening_screen(alive_characters, dead_characters):
     {alive_characters}
     you can select one of these characters or create a new one by typing a name
     ''')
+    """
     select_character = input("Type the name of your character\n")
     if select_character in alive_characters:
         character_info = player_select_existing(select_character)
