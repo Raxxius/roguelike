@@ -77,6 +77,7 @@ def dungeon_size(stdscr, character):
             y_size = 50
         elif size == "l":
             stdscr.addstr(7, 10, "Creating a large dungeon")
+            x_size = 100
             y_size = 100
         else:
             stdscr.addstr(7, 10, f"{size} is not a valid size you muppet")
@@ -90,8 +91,11 @@ def dungeon_size(stdscr, character):
         stdscr.addstr(5, 10, "Generating map")
         dungeon_map = init_dungeon(x_size, y_size)
         
-        # add rooms to the dungeon map
-        room_number = init_rooms(random.randint(8, 12))
+        '''
+        add rooms to the dungeon map
+        total number of rooms are based on the size of the dungeon
+        '''
+        room_number = init_rooms(random.randint(round((x_size * y_size / 100)), round((x_size * y_size / ((2/3) * 100)))))
         position_rooms(room_number, dungeon_map, x_size, y_size)
         
         # add player to room 1
@@ -112,6 +116,7 @@ def dungeon_size(stdscr, character):
         stdscr.addstr(7, 10, "Map Generated!")
         stdscr.addstr(9, 10, "Press a key to continue")
         stdscr.getch()
+
 
 def gamescreen(stdscr, character):
     """ this function loads the main game screen curses overlay."""
@@ -291,6 +296,12 @@ def position_rooms(rooms, dungeon_map, dungeon_width, dungeon_height):
     """
 
     for room in rooms:
+        for room:
+            xcoord = random.randint(1, 5)
+            ycoord = random.randint(1, 5)
+
+    """
+    for room in rooms:
         xcoord = random.randint(0, dungeon_width)
         ycoord = random.randint(0, dungeon_height)
         xcoord, ycoord = room_pos_check(xcoord, ycoord, dungeon_width,
@@ -321,19 +332,19 @@ def room_pos_check(xcoord, ycoord, dungeon_width, dungeon_height, room, rooms):
     return xcoord, ycoord
 
 
-def add_player():
+def add_player(room_number, dungeon_map, x_size, y_size):
     """
     add player to the map
     """
 
 
-def add_monsters():
+def add_monsters(room_number, dungeon_map, x_size, y_size):
     """
     add monster to the map
     """
 
 
-def add_loot():
+def add_loot(room_number, dungeon_map, x_size, y_size):
     """
     add loot to the map
     """
