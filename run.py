@@ -90,7 +90,7 @@ def dungeon_size(character):
         SHEET.worksheet(title=f"{character[0]}_map").update('A1', dungeon_passover)
 
 
-def gamescreen(character):
+def gamescreen(stdscr, character):
     """ this function loads the main game screen curses overlay."""
 
     curses.init_pair(1, curses.COLOR_GREEN, curses.COLOR_RED)
@@ -143,6 +143,7 @@ def gamescreen(character):
 
     gamemap.refresh(0, 0, 0, 26, 23, 79)
 
+
     stdscr.refresh()
     character_stats.refresh()
     stdscr.getch()
@@ -164,20 +165,28 @@ def opening_screen(stdscr, alive_characters, dead_characters):
 
     stdscr.addstr(2,10,"Welcome to the roguelike dungeon")
     stdscr.addstr(3,10,"The following characters are alive:")
-    stdscr.addstr(4,10,f"{alive_characters}")
-    stdscr.addstr(5,10,"you can select one of these characters or create a"
-    stdscr.addstr(6,10, "new one by typing a name")
+    stdscr.addstr(5,10,f"{alive_characters}")
+    stdscr.addstr(7,10,"you can select one of these characters or create a")
+    stdscr.addstr(8,10,"new one by typing a name")
+    stdscr.addstr(10, 10, "Type the name of your character")
 
     stdscr.refresh()
 
-    select_character = input("Type the name of your character\n")
+    character_scr = Textbox(curses.newwin(1, 23, 12, 10))
+
+    select_character = character_scr.edit().strip()
+
     if select_character in alive_characters:
         character_info = player_select_existing(select_character)
+        stdscr.addstr(13, 10, f"{select_character} returns to fight!")
+        stdscr.addstr(14, 10, "Press a key to continue")
     elif select_character in dead_characters:
         print(f"Sorry, {select_character} is dead! please select another name.")
         opening_screen(alive_characters, dead_characters)
     else:
         character_info = player_select_new(select_character)
+    
+
     return character_info
 
 
@@ -197,8 +206,7 @@ def player_select_new(character):
     """
     This function selects a new chracter and adds them to the googlesheet
     """
-    print(f"A new hero, {character} enters the fight!")
-    character_info = [character, "alive", 1, 16, 10, "", "", "", "", "", "", "Shortsword", "Chainmail", 16, 10]
+    character_info = [character, "alive", 1, 0, 16, 10, "", "", "", "", "", "", "Shortsword", "Chainmail", 16, 10]
     SHEET.worksheet("players").append_row(character_info)
     return character_info
 
@@ -364,8 +372,8 @@ def main(stdscr):
     main function to call other functions
     """
     character = player_select(stdscr)
-    dungeon_size(character)
-    gamescreen(character)
+    # dungeon_size(character)
+    # gamescreen(stdscr, character)
 
 
 wrapper(main)
