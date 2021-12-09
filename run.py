@@ -45,36 +45,44 @@ def player_select(stdscr):
     return character
 
 
-def dungeon_size(character):
+def dungeon_size(stdscr, character):
     """
     This function decides the size of the map and runs all
     the individual dungeon generation functions
     if a map already exists for the character it will load that instead
     """
 
+    # Fetch data from google sheets
     existing_map = str(SHEET.worksheets())
     character_map = f"'{character[0]}_map'"
+    stdscr.clear()
+
     if character_map in existing_map:
-        print(f"{character[0]} is already in a dungeon. Loading the dungeon.")
+        stdscr.addstr(2, 10, f"{character[0]} is already in a dungeon. Loading the dungeon.")
     else:
-        print("defining dungeon size...\n")
-        size = input("how large would you like the dungeon to be? S, M or L?\n")
-        sizef = size[0]
-        if "s" in sizef.lower():
-            print("Creating a small dungeon")
+        stdscr.addstr(2, 10, "defining dungeon size...")
+        stdscr.addstr(4, 10, "how large would you like the dungeon to be? S, M or L?")
+        stdscr.refresh()
+        input_size = Textbox(curses.newwin(1, 2, 5, 10))
+        stdscr.refresh()
+        size = input_size.edit().lower().strip()
+        if size == "s":
+            stdscr(7, 10, "Creating a small dungeon")
             x_size = 40
             y_size = 20
-        elif "m" in sizef.lower():
+            stdscr.getch()
+        #elif "m" in sizef.lower():
             print("Creating a medium dungeon")
             x_size = 50
             y_size = 50
-        elif "l" in sizef.lower():
+        #elif "l" in sizef.lower():
             print("Creating a large dungeon")
             x_size = 100
             y_size = 100
         else:
-            print("that's not a valid size you muppet")
-            dungeon_size(character)
+            stdscr.addstr(7, 10, f"{size} is not a valid size you muppet")
+            stdscr.getch()
+            dungeon_size(stdscr, character)
 
         # create a blank dungeon map
         dungeon_map = init_dungeon(x_size, y_size)
@@ -379,7 +387,7 @@ def main(stdscr):
     main function to call other functions
     """
     character = player_select(stdscr)
-    # dungeon_size(character)
+    dungeon_size(stdscr, character)
     # gamescreen(stdscr, character)
 
 
