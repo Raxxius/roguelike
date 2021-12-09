@@ -1,9 +1,9 @@
 import random
 import curses
 from curses import wrapper
+from curses.textpad import Textbox, rectangle
 import gspread
 # import time
-# from curses.textpad import rectangle
 from google.oauth2.service_account import Credentials
 
 SCOPE = [
@@ -27,10 +27,18 @@ def player_select():
     with the status = "alive", and allows the players
     to select an alive character or choose a new one
     """
+    curses.init_pair(1, curses.COLOR_WHITE, curses.COLOR_BLACK)
+    WHITE_BLACK = curse.init_pair(1)
+
     players = SHEET.worksheet("players")
     player_data = players.get_all_values()
     alive_characters = []
     dead_characters = []
+
+    # Sets up the title screen
+
+    stdscr.clear()
+
     for player_number in player_data:
         if player_number[1] == "alive":
             alive_characters.append(player_number[0])
@@ -152,12 +160,20 @@ def opening_screen(alive_characters, dead_characters):
     if the players selects a name that already exists but is dead, the user
     will be asked to pick another character.
     """
-    print(f'''
+
+    stdscr.addstr (3, 5, f'''
     Welcome to the roguelike dungeon
     The following characters are alive
     {alive_characters}
     you can select one of these characters or create a new one by typing a name
     ''')
+
+#    print(f'''
+#    Welcome to the roguelike dungeon
+#    The following characters are alive
+#    {alive_characters}
+#   you can select one of these characters or create a new one by typing a name
+#    ''')
     select_character = input("Type the name of your character\n")
     if select_character in alive_characters:
         character_info = player_select_existing(select_character)
