@@ -86,6 +86,8 @@ def dungeon_size(stdscr, character):
             dungeon_size(stdscr, character)
 
         # create a blank dungeon map
+        stdscr.clear()
+        stdscr.addstr(5, 10, "Generating map")
         dungeon_map = init_dungeon(x_size, y_size)
         
         # add rooms to the dungeon map
@@ -98,6 +100,9 @@ def dungeon_size(stdscr, character):
         dungeon_passover = [dungeon_list[x:x+x_size] for x in range(0, len(dungeon_list), x_size)]
         SHEET.worksheet(title=f"{character[0]}_map").update('A1', dungeon_passover)
 
+        stdscr.addstr(7, 10, "Map Generated!")
+        stdscr.addstr(9, 10, "Press a key to continue")
+        stdscr.getch()
 
 def gamescreen(stdscr, character):
     """ this function loads the main game screen curses overlay."""
@@ -235,15 +240,11 @@ def init_dungeon(d_width, d_height):
     Function creates a paired dictonary with an x,y coordinate: and True
     This will create a rectangle with all squares set to wall(True).
     """
-
-    pstdscr.addstr(11, 10,"Generating dungeon map...")
     dungeon_map = {}
     for ycoord in range(d_height):
         for xcoord in range(d_width):
             # creates a dungeon tile with an x,y coord and sets True.
             dungeon_map[xcoord, ycoord] = "wall"
-    stdscr.addstr(13, 10,"map generated! Press a key to continue")
-    stdscr.getch()
     return dungeon_map
 
 
