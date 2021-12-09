@@ -67,20 +67,21 @@ def dungeon_size(stdscr, character):
         stdscr.refresh()
         size = input_size.edit().lower().strip()
         if size == "s":
-            stdscr(7, 10, "Creating a small dungeon")
+            stdscr.addstr(7, 10, "Creating a small dungeon")
             x_size = 40
             y_size = 20
             stdscr.getch()
-        #elif "m" in sizef.lower():
-            print("Creating a medium dungeon")
+        elif size == "m":
+            stdscr.addstr(7, 10, "Creating a medium dungeon")
             x_size = 50
             y_size = 50
-        #elif "l" in sizef.lower():
-            print("Creating a large dungeon")
-            x_size = 100
+        elif size == "l":
+            stdscr.addstr(7, 10, "Creating a large dungeon")
             y_size = 100
         else:
             stdscr.addstr(7, 10, f"{size} is not a valid size you muppet")
+            stdscr.addstr(9, 10, "please input a valid size")
+            stdscr.addstr(8, 10, "press a key to continue")
             stdscr.getch()
             dungeon_size(stdscr, character)
 
