@@ -156,3 +156,8 @@ due to pushing the cursor beyond the screen. This error can just be ignored, whi
 - When creating the map pad, only the first 20 x coordinates were shown
 ### Solution
 - This wasn't actually a bug but a data input error, the first 20 x coordinates were shown because the map is 20 x coordinates long.
+
+### Bug
+- When switching to curses there was an issue with a space being added to the end of the characters.
+### Solution
+- Addition of .strip() to remove the space afterwards made the code work.
