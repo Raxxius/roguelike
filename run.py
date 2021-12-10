@@ -96,8 +96,9 @@ def dungeon_size(stdscr, character):
         total number of rooms are based on the size of the dungeon
         '''
         room_number = init_rooms(random.randint(round((x_size * y_size / 100)), round((x_size * y_size / ((2/3) * 100)))))
-        position_rooms(room_number, dungeon_map, x_size, y_size)
+        position_rooms(stdscr, room_number, dungeon_map, x_size, y_size)
         
+        """
         # add player to room 1
         add_player(room_number, dungeon_map, x_size, y_size)
 
@@ -106,6 +107,8 @@ def dungeon_size(stdscr, character):
 
         # add loot to random rooms
         add_loot(room_number, dungeon_map, x_size, y_size)
+
+        """
 
         #upload new map to google sheets
         SHEET.add_worksheet(title=f"{character[0]}_map", rows=y_size, cols=x_size)
@@ -116,6 +119,7 @@ def dungeon_size(stdscr, character):
         stdscr.addstr(7, 10, "Map Generated!")
         stdscr.addstr(9, 10, "Press a key to continue")
         stdscr.getch()
+
 
 
 def gamescreen(stdscr, character):
@@ -280,7 +284,7 @@ def init_rooms(room_number):
     return rooms
 
 
-def position_rooms(rooms, dungeon_map, dungeon_width, dungeon_height):
+def position_rooms(stdscr, rooms, dungeon_map, dungeon_width, dungeon_height):
     """
     This function puts the rooms generated in the init_rooms function
     into the dungeon, rooms are added by changing the "wall" value in the
@@ -292,26 +296,52 @@ def position_rooms(rooms, dungeon_map, dungeon_width, dungeon_height):
     the last room (containing the boss) is added to be near the lower 
     right of the map.
 
-    Rooms are populated in quarters. 
-    """
+    Rooms are populated in quarters.
+    """ 
+    # last room is len - 1 due to dic starting at 0
+    total_rooms = len(rooms) - 1
+    q1 = round(total_rooms / 4)
+    q2 = q1 + round(total_rooms / 4)
+    q3 = q2 + round(total_rooms / 4)
+    q4 = total_rooms - q3
+
+    # Add starting room
+    xcoord = random.randint(1, 4)
+    ycoord = random.randint(1, 4)
+    for xvar in range(rooms[0][1]):
+        xnew = xcoord + xvar
+        for yvar in range(rooms[0][2]):
+            ynew = ycoord + yvar
+            dungeon_map[xnew, ynew] = f"room start"
+
+    # Add boss room
+    xcoord = random.randint(int(dungeon_width - 4), int(dungeon_width - 1))
+    ycoord = random.randint(int(dungeon_height - 4), int(dungeon_height - 1))
+    xcoord, ycoord = room_pos_check(xcoord, ycoord, dungeon_width,
+                                    dungeon_height, total_rooms, rooms)
+    for xvar in range(rooms[total_rooms][1]):
+        xnew = xcoord + xvar
+        for yvar in range(rooms[total_rooms][2]):
+            ynew = ycoord + yvar
+            dungeon_map[xnew, ynew] = f"room boss"
 
     for room in rooms:
-        for room:
-            xcoord = random.randint(1, 5)
-            ycoord = random.randint(1, 5)
-
-    """
-    for room in rooms:
-        xcoord = random.randint(0, dungeon_width)
-        ycoord = random.randint(0, dungeon_height)
-        xcoord, ycoord = room_pos_check(xcoord, ycoord, dungeon_width,
-                                        dungeon_height, room, rooms)
-        for xvar in range(rooms[room][1]):
-            xnew = xcoord + xvar
-            for yvar in range(rooms[room][2]):
-                ynew = ycoord + yvar
-                dungeon_map[xnew, ynew] = f"room {room}"
+        if room = 0:
+            pass
+        elif room = total_rooms:
+            pass
+        else:
+            xcoord = random.randint(1, dungeon_width)
+            ycoord = random.randint(1, dungeon_height)
+            xcoord, ycoord = room_pos_check(xcoord, ycoord, dungeon_width,
+                                            dungeon_height, room, rooms)
+            for xvar in range(rooms[room][1]):
+                xnew = xcoord + xvar
+                for yvar in range(rooms[room][2]):
+                    ynew = ycoord + yvar
+                    dungeon_map[xnew, ynew] = f"room {room}"
     return dungeon_map
+
 
 
 def room_pos_check(xcoord, ycoord, dungeon_width, dungeon_height, room, rooms):
@@ -321,10 +351,6 @@ def room_pos_check(xcoord, ycoord, dungeon_width, dungeon_height, room, rooms):
     walls
     """
 
-    if xcoord == 0:
-        xcoord = 1
-    if ycoord == 0:
-        ycoord = 1
     if xcoord + rooms[room][1] >= dungeon_width:
         xcoord = dungeon_width - rooms[room][1] - 1
     if ycoord + rooms[room][2] >= dungeon_height:
