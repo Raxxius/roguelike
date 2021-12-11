@@ -109,7 +109,7 @@ def dungeon_size(stdscr, character):
 
         """
 
-        #upload new map to google sheets
+        # Upload new map to google sheets
         SHEET.add_worksheet(title=f"{character[0]}_map", rows=y_size, cols=x_size)
         dungeon_list = list(dungeon_map.values())
         dungeon_passover = [dungeon_list[x:x+x_size] for x in range(0, len(dungeon_list), x_size)]
@@ -118,7 +118,6 @@ def dungeon_size(stdscr, character):
         stdscr.addstr(7, 10, "Map Generated!")
         stdscr.addstr(9, 10, "Press a key to continue")
         stdscr.getch()
-
 
 
 def gamescreen(stdscr, character):
@@ -314,10 +313,8 @@ def position_rooms(stdscr, rooms, dungeon_map, dungeon_width, dungeon_height):
             dungeon_map[xnew, ynew] = "room start"
 
     # Add boss room
-    xcoord = random.randint(int(dungeon_width - 4), int(dungeon_width - 1))
-    ycoord = random.randint(int(dungeon_height - 4), int(dungeon_height - 1))
-    xcoord, ycoord = room_pos_check(xcoord, ycoord, dungeon_width,
-                                    dungeon_height, total_rooms, rooms)
+    xcoord, ycoord = room_pos_check(int(dungeon_width - 4), int(dungeon_width - 1), int(dungeon_height - 4), 
+                                    int(dungeon_height - 1), dungeon_width, dungeon_height, total_rooms, rooms, dungeon_map,)
     for xvar in range(rooms[total_rooms][1]):
         xnew = xcoord + xvar
         for yvar in range(rooms[total_rooms][2]):
@@ -331,15 +328,19 @@ def position_rooms(stdscr, rooms, dungeon_map, dungeon_width, dungeon_height):
         elif room == total_rooms:
             continue
         elif room <= q1:
-            xcoord = random.randint(1, dungeon_width / 2)
-            ycoord = random.randint(1, dungeon_height / 2)
-            xcoord, ycoord = room_pos_check(xcoord, ycoord, dungeon_width,
-                                            dungeon_height, room, rooms)            
+            xcoord, ycoord = room_pos_check(1, round(dungeon_width / 2), 1, round(dungeon_height / 2),
+            dungeon_width, dungeon_height, room, rooms, dungeon_map)
         elif room <= q2:
-            xcoord = random.randint(dungeon_width / 2, dungeon_width)
-            ycoord = random.randint(1, dungeon_height / 2)
-            xcoord, ycoord = room_pos_check(xcoord, ycoord, dungeon_width,
-                                            dungeon_height, room, rooms)
+            xcoord, ycoord = room_pos_check(round(dungeon_width / 2), dungeon_width, 1, round(dungeon_height / 2),
+            dungeon_width, dungeon_height, room, rooms, dungeon_map)
+        for xvar in range(rooms[room][1]):
+            xnew = xcoord + xvar
+            for yvar in range(rooms[room][2]):
+                ynew = ycoord + yvar
+                dungeon_map[xnew, ynew] = f"room {room}"
+    return dungeon_map
+
+"""         
         elif room <= q3:
             xcoord = random.randint(1, dungeon_width / 2)
             ycoord = random.randint(dungeon_height / 2, dungeon_height)
@@ -350,28 +351,36 @@ def position_rooms(stdscr, rooms, dungeon_map, dungeon_width, dungeon_height):
             ycoord = random.randint(dungeon_height / 2, dungeon_height)
             xcoord, ycoord = room_pos_check(xcoord, ycoord, dungeon_width,
                                             dungeon_height, room, rooms)
-        for xvar in range(rooms[room][1]):
-            xnew = xcoord + xvar
-            for yvar in range(rooms[room][2]):
-                ynew = ycoord + yvar
-                dungeon_map[xnew, ynew] = f"room {room}"
-    return dungeon_map
+        else:
+            print("Error in map generation")
+"""
 
-
-
-def room_pos_check(xcoord, ycoord, dungeon_width, dungeon_height, room, rooms):
+def room_pos_check(x_start, x_end, y_start, y_end, dungeon_width, dungeon_height, room, rooms, dungeon_map):
     """
     Makes sure that the rooms do not go outside the boundries of the map
-    and that the edges (0 coordinates, end of map coordinates) are always
-    walls
-
-    Also makes sure that 
+    and that the edges of the map are always walls.
     """
 
+    #generates random coords within limits based on the q value
+    xcoord = random.randint(x_start, x_end)
+    ycoord = random.randint(y_start, y_end)
+
+    # checks that rooms don't go out of bounds pushes them up and to the left
     if xcoord + rooms[room][1] >= dungeon_width:
         xcoord = dungeon_width - rooms[room][1] - 1
     if ycoord + rooms[room][2] >= dungeon_height:
         ycoord = dungeon_height - rooms[room][2] - 1
+    
+    # checks that rooms don't overlap, restarts process if they do
+    for xvar in range(rooms[room][1]):
+        xnew = xcoord + xvar
+        for yvar in range(rooms[room][2]):
+            ynew = ycoord + yvar
+        if dungeon_map[xnew, ynew] == "wall":
+            continue
+        else:
+            room_pos_check(x_start, x_end, y_start, y_end, dungeon_width, dungeon_height, room, rooms, dungeon_map)
+
     return xcoord, ycoord
 
 
@@ -380,6 +389,8 @@ def add_player(room_number, dungeon_map, x_size, y_size):
     """
     add player to the map
     """
+    #for room in dungeon_map
+
 
 
 def add_monsters(room_number, dungeon_map, x_size, y_size):
