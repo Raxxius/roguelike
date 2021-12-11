@@ -17,6 +17,17 @@ SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('roguelike')
 
+# Classes
+
+class Room(self, xcoord, ycoord, width, height):
+    def __init__(self, xcoord, ycoord, width, height):
+        self.xcoord = xcoord
+        self.ycoord = ycoord
+        self.width = width
+        self.height = height
+
+class character(self, health, max_health, mana, max_mana, xp, level):
+    def __init__(self, )
 
 # Main flow functions
 
@@ -98,7 +109,7 @@ def dungeon_size(stdscr, character):
         position_rooms(stdscr, room_number, dungeon_map, x_size, y_size)
         
         """
-        # add player to room 1
+        # add player to room start
         add_player(room_number, dungeon_map, x_size, y_size)
 
         # add monsters to random rooms, and boss to final room
@@ -301,7 +312,6 @@ def position_rooms(stdscr, rooms, dungeon_map, dungeon_width, dungeon_height):
     q1 = round(total_rooms / 4)
     q2 = q1 + round(total_rooms / 4)
     q3 = q2 + round(total_rooms / 4)
-    q4 = total_rooms - q3
 
     # Add starting room
     xcoord = 1
@@ -333,27 +343,22 @@ def position_rooms(stdscr, rooms, dungeon_map, dungeon_width, dungeon_height):
         elif room <= q2:
             xcoord, ycoord = room_pos_check(round(dungeon_width / 2), dungeon_width, 1, round(dungeon_height / 2),
             dungeon_width, dungeon_height, room, rooms, dungeon_map)
+        elif room <= q3:
+            xcoord, ycoord = room_pos_check(1, round(dungeon_width / 2), round(dungeon_height / 2), dungeon_height,
+            dungeon_width, dungeon_height, room, rooms, dungeon_map)
+        elif room <= total_rooms:
+            xcoord, ycoord = room_pos_check(round(dungeon_width / 2), dungeon_width, round(dungeon_height / 2), dungeon_height,
+            dungeon_width, dungeon_height, room, rooms, dungeon_map)
+        else:
+            print("Error in map generation")
         for xvar in range(rooms[room][1]):
             xnew = xcoord + xvar
             for yvar in range(rooms[room][2]):
                 ynew = ycoord + yvar
                 dungeon_map[xnew, ynew] = f"room {room}"
+
     return dungeon_map
 
-"""         
-        elif room <= q3:
-            xcoord = random.randint(1, dungeon_width / 2)
-            ycoord = random.randint(dungeon_height / 2, dungeon_height)
-            xcoord, ycoord = room_pos_check(xcoord, ycoord, dungeon_width,
-                                            dungeon_height, room, rooms)
-        elif room <= q4:
-            xcoord = random.randint(dungeon_width / 2, dungeon_width)
-            ycoord = random.randint(dungeon_height / 2, dungeon_height)
-            xcoord, ycoord = room_pos_check(xcoord, ycoord, dungeon_width,
-                                            dungeon_height, room, rooms)
-        else:
-            print("Error in map generation")
-"""
 
 def room_pos_check(x_start, x_end, y_start, y_end, dungeon_width, dungeon_height, room, rooms, dungeon_map):
     """
