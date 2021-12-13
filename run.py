@@ -19,6 +19,7 @@ SHEET = GSPREAD_CLIENT.open('roguelike')
 
 # Classes
 
+"""
 class Dungeon(self, rooms, width, height):
     def __init__(self, rooms, width, height):
         self.rooms = rooms
@@ -27,20 +28,17 @@ class Dungeon(self, rooms, width, height):
 
 # Dungeon subclasses
 
-class Room(Dungeon):
+
+class Room(self, xcoord, ycoord, width, height, type):
     def __init__(self, xcoord, ycoord, width, height, type):
         self.xcoord = xcoord
         self.ycoord = ycoord
         self.width = width
         self.height = height
 
-        def description(self):
-
-    return f"A {self.type} room at ({self.xcoord},{self.ycoord})"
-
-class Character(self, health, max_health, mana, max_mana, xp, level):
-    def __init__(self, health, max_health, mana, max_mana, xp, level)
-
+# class Character(self, health, max_health, mana, max_mana, xp, level):
+#     def __init__(self, health, max_health, mana, max_mana, xp, level)
+"""
 # Main flow functions
 
 
@@ -80,7 +78,8 @@ def dungeon_size(stdscr, character):
     stdscr.clear()
 
     if character_map in existing_map:
-        stdscr.addstr(2, 10, f"{character[0]} is already in a dungeon. Loading the dungeon.")
+        stdscr.addstr(2, 10, f"{character[0]} is already in a dungeon. Loading 
+                             the dungeon.")
     else:
         stdscr.addstr(2, 10, "defining dungeon size...")
         stdscr.addstr(4, 10, "how large would you like the dungeon to be? S, M or L?")
@@ -319,7 +318,9 @@ def position_rooms(stdscr, rooms, dungeon_map, dungeon_width, dungeon_height):
 
     Rooms are populated in quarters.
     """ 
+
     # last room is len - 1 due to dic starting at 0
+    room = []
     total_rooms = len(rooms) - 1
     q1 = round(total_rooms / 4)
     q2 = q1 + round(total_rooms / 4)
@@ -393,10 +394,10 @@ def room_pos_check(x_start, x_end, y_start, y_end, dungeon_width, dungeon_height
         xnew = xcoord + xvar
         for yvar in range(rooms[room][2]):
             ynew = ycoord + yvar
-        if dungeon_map[xnew, ynew] == "wall":
-            continue
-        else:
-            room_pos_check(x_start, x_end, y_start, y_end, dungeon_width, dungeon_height, room, rooms, dungeon_map)
+            if dungeon_map[xnew, ynew] == "wall":
+                continue
+            else:
+                room_pos_check(x_start, x_end, y_start, y_end, dungeon_width, dungeon_height, room, rooms, dungeon_map)
 
     return xcoord, ycoord
 
