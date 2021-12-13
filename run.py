@@ -19,15 +19,27 @@ SHEET = GSPREAD_CLIENT.open('roguelike')
 
 # Classes
 
-class Room(self, xcoord, ycoord, width, height):
-    def __init__(self, xcoord, ycoord, width, height):
+class Dungeon(self, rooms, width, height):
+    def __init__(self, rooms, width, height):
+        self.rooms = rooms
+        self.width = width
+        self.height = height
+
+# Dungeon subclasses
+
+class Room(Dungeon):
+    def __init__(self, xcoord, ycoord, width, height, type):
         self.xcoord = xcoord
         self.ycoord = ycoord
         self.width = width
         self.height = height
 
-class character(self, health, max_health, mana, max_mana, xp, level):
-    def __init__(self, )
+        def description(self):
+
+    return f"A {self.type} room at ({self.xcoord},{self.ycoord})"
+
+class Character(self, health, max_health, mana, max_mana, xp, level):
+    def __init__(self, health, max_health, mana, max_mana, xp, level)
 
 # Main flow functions
 
