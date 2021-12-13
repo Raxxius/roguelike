@@ -112,14 +112,14 @@ def dungeon_size(stdscr, character):
         stdscr.clear()
         stdscr.addstr(5, 10, "Generating map")
         dungeon_map = init_dungeon(x_size, y_size)
-        
-        '''
-        add rooms to the dungeon map
-        total number of rooms are based on the size of the dungeon
-        '''
-        room_number = init_rooms(random.randint(round((x_size * y_size / 100)), round((x_size * y_size / ((2/3) * 100)))))
+
+        # add rooms to the dungeon map
+        # total number of rooms are based on the size of the dungeon
+
+        room_number = init_rooms(random.randint(round((x_size * y_size / 100)),
+                                 round((x_size * y_size / ((2/3) * 100)))))
         position_rooms(stdscr, room_number, dungeon_map, x_size, y_size)
-        
+
         """
         # add player to room start
         add_player(room_number, dungeon_map, x_size, y_size)
@@ -133,9 +133,11 @@ def dungeon_size(stdscr, character):
         """
 
         # Upload new map to google sheets
-        SHEET.add_worksheet(title=f"{character[0]}_map", rows=y_size, cols=x_size)
+        SHEET.add_worksheet(title=f"{character[0]}_map", rows=y_size,
+                            cols=x_size)
         dungeon_list = list(dungeon_map.values())
-        dungeon_passover = [dungeon_list[x:x+x_size] for x in range(0, len(dungeon_list), x_size)]
+        dungeon_passover = [dungeon_list[x:x+x_size]
+                            for x in range(0, len(dungeon_list), x_size)]
         SHEET.worksheet(title=f"{character[0]}_map").update('A1', dungeon_passover)
 
         stdscr.addstr(7, 10, "Map Generated!")
@@ -148,8 +150,8 @@ def gamescreen(stdscr, character):
 
     curses.init_pair(1, curses.COLOR_GREEN, curses.COLOR_RED)
     curses.init_pair(2, curses.COLOR_RED, curses.COLOR_GREEN)
-    GREEN_RED = curses.color_pair(1)
-    RED_GREEN = curses.color_pair(2)
+    # GREEN_RED = curses.color_pair(1)
+    # RED_GREEN = curses.color_pair(2)
 
     character_stats = curses.newwin(21, 20, 0, 0)
 
@@ -170,7 +172,8 @@ def gamescreen(stdscr, character):
     character_stats.addstr(f"{character[0]}\n"
                            "\n"
                            "HEALTH   MANA\n"
-                           f"{character[4]}/{character[14]}{health_gap}{character[5]}/{character[15]}\n"
+                           f"{character[4]}/{character[14]}{health_gap}"
+                           f"{character[5]}/{character[15]}\n"
                            "\n"
                            "SKILLS\n"
                            f"1. {character[6]}\n"
@@ -196,7 +199,6 @@ def gamescreen(stdscr, character):
 
     gamemap.refresh(0, 0, 0, 26, 23, 79)
 
-
     stdscr.refresh()
     character_stats.refresh()
     stdscr.getch()
@@ -212,9 +214,8 @@ def opening_screen(stdscr, alive_characters, dead_characters):
     will be asked to pick another character.
     """
 
-
     curses.init_pair(1, curses.COLOR_WHITE, curses.COLOR_BLACK)
-    WHITE_BLACK = curses.color_pair(1)
+    # WHITE_BLACK = curses.color_pair(1)
 
     stdscr.addstr(2, 10, "Welcome to the roguelike dungeon")
     stdscr.addstr(3, 10, "The following characters are alive:")
@@ -266,7 +267,8 @@ def player_select_new(character):
     """
     This function selects a new chracter and adds them to the googlesheet
     """
-    character_info = [character, "alive", 1, 0, 16, 10, "", "", "", "", "", "", "Shortsword", "Chainmail", 16, 10]
+    character_info = [character, "alive", 1, 0, 16, 10, "", "", "", "", "", "",
+                      "Shortsword", "Chainmail", 16, 10]
     SHEET.worksheet("players").append_row(character_info)
     return character_info
 
@@ -318,7 +320,7 @@ def position_rooms(stdscr, rooms, dungeon_map, dungeon_width, dungeon_height):
     right of the map.
 
     Rooms are populated in quarters.
-    """ 
+    """
 
     # last room is len - 1 due to dic starting at 0
     room = []
@@ -337,7 +339,7 @@ def position_rooms(stdscr, rooms, dungeon_map, dungeon_width, dungeon_height):
             dungeon_map[xnew, ynew] = "room start"
 
     # Add boss room
-    xcoord, ycoord = room_pos_check(int(dungeon_width - 4), int(dungeon_width - 1), int(dungeon_height - 4), 
+    xcoord, ycoord = room_pos_check(int(dungeon_width - 4), int(dungeon_width - 1), int(dungeon_height - 4),
                                     int(dungeon_height - 1), dungeon_width, dungeon_height, total_rooms, rooms, dungeon_map,)
     for xvar in range(rooms[total_rooms][1]):
         xnew = xcoord + xvar
@@ -353,16 +355,16 @@ def position_rooms(stdscr, rooms, dungeon_map, dungeon_width, dungeon_height):
             continue
         elif room <= q1:
             xcoord, ycoord = room_pos_check(1, round(dungeon_width / 2), 1, round(dungeon_height / 2),
-            dungeon_width, dungeon_height, room, rooms, dungeon_map)
+                                            dungeon_width, dungeon_height, room, rooms, dungeon_map)
         elif room <= q2:
             xcoord, ycoord = room_pos_check(round(dungeon_width / 2), dungeon_width, 1, round(dungeon_height / 2),
-            dungeon_width, dungeon_height, room, rooms, dungeon_map)
+                                            dungeon_width, dungeon_height, room, rooms, dungeon_map)
         elif room <= q3:
             xcoord, ycoord = room_pos_check(1, round(dungeon_width / 2), round(dungeon_height / 2), dungeon_height,
-            dungeon_width, dungeon_height, room, rooms, dungeon_map)
+                                            dungeon_width, dungeon_height, room, rooms, dungeon_map)
         elif room <= total_rooms:
             xcoord, ycoord = room_pos_check(round(dungeon_width / 2), dungeon_width, round(dungeon_height / 2), dungeon_height,
-            dungeon_width, dungeon_height, room, rooms, dungeon_map)
+                                            dungeon_width, dungeon_height, room, rooms, dungeon_map)
         else:
             print("Error in map generation")
         for xvar in range(rooms[room][1]):
@@ -380,7 +382,7 @@ def room_pos_check(x_start, x_end, y_start, y_end, dungeon_width, dungeon_height
     and that the edges of the map are always walls.
     """
 
-    #generates random coords within limits based on the q value
+    # generates random coords within limits based on the q value
     xcoord = random.randint(x_start, x_end)
     ycoord = random.randint(y_start, y_end)
 
@@ -389,7 +391,7 @@ def room_pos_check(x_start, x_end, y_start, y_end, dungeon_width, dungeon_height
         xcoord = dungeon_width - rooms[room][1] - 1
     if ycoord + rooms[room][2] >= dungeon_height:
         ycoord = dungeon_height - rooms[room][2] - 1
-    
+
     # checks that rooms don't overlap, restarts process if they do
     for xvar in range(rooms[room][1]):
         xnew = xcoord + xvar
@@ -403,13 +405,11 @@ def room_pos_check(x_start, x_end, y_start, y_end, dungeon_width, dungeon_height
     return xcoord, ycoord
 
 
-
 def add_player(room_number, dungeon_map, x_size, y_size):
     """
     add player to the map
     """
-    #for room in dungeon_map
-
+    # for room in dungeon_map
 
 
 def add_monsters(room_number, dungeon_map, x_size, y_size):
@@ -425,7 +425,6 @@ def add_loot(room_number, dungeon_map, x_size, y_size):
 
 
 # Gameplay functions
-
 
 def mapconversion(character):
     """ takes the character and pulls the map from the google sheet,
