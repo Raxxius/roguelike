@@ -78,8 +78,8 @@ def dungeon_size(stdscr, character):
     stdscr.clear()
 
     if character_map in existing_map:
-        stdscr.addstr(2, 10, f"{character[0]} is already in a dungeon. Loading 
-                             the dungeon.")
+        stdscr.addstr(2, 10, f"{character[0]} is already in a dungeon. Loading"
+                      " the dungeon.")
     else:
         stdscr.addstr(2, 10, "defining dungeon size...")
         stdscr.addstr(4, 10, "how large would you like the dungeon to be? S, M or L?")
