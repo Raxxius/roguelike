@@ -3,7 +3,7 @@ import curses
 from curses import wrapper
 from curses.textpad import Textbox
 import gspread
-# import time
+import time
 from google.oauth2.service_account import Credentials
 
 SCOPE = [
@@ -39,6 +39,7 @@ class Room(self, xcoord, ycoord, width, height, type):
 # class Character(self, health, max_health, mana, max_mana, xp, level):
 #     def __init__(self, health, max_health, mana, max_mana, xp, level)
 """
+
 # Main flow functions
 
 
@@ -73,6 +74,7 @@ def dungeon_size(stdscr, character):
     """
 
     # Fetch data from google sheets
+
     existing_map = str(SHEET.worksheets())
     character_map = f"'{character[0]}_map'"
     stdscr.clear()
@@ -118,12 +120,13 @@ def dungeon_size(stdscr, character):
 
         room_number = init_rooms(random.randint(round((x_size * y_size / 100)),
                                  round((x_size * y_size / ((2/3) * 100)))))
+
         position_rooms(stdscr, room_number, dungeon_map, x_size, y_size)
 
-        """
         # add player to room start
-        add_player(room_number, dungeon_map, x_size, y_size)
+        dungeon_map = add_player(dungeon_map)
 
+        """
         # add monsters to random rooms, and boss to final room
         add_monsters(room_number, dungeon_map, x_size, y_size)
 
@@ -323,7 +326,6 @@ def position_rooms(stdscr, rooms, dungeon_map, dungeon_width, dungeon_height):
     """
 
     # last room is len - 1 due to dic starting at 0
-    room = []
     total_rooms = len(rooms) - 1
     q1 = round(total_rooms / 4)
     q2 = q1 + round(total_rooms / 4)
@@ -339,8 +341,9 @@ def position_rooms(stdscr, rooms, dungeon_map, dungeon_width, dungeon_height):
             dungeon_map[xnew, ynew] = "room start"
 
     # Add boss room
-    xcoord, ycoord = room_pos_check(int(dungeon_width - 4), int(dungeon_width - 1), int(dungeon_height - 4),
-                                    int(dungeon_height - 1), dungeon_width, dungeon_height, total_rooms, rooms, dungeon_map,)
+    xcoord, ycoord = room_pos_check(dungeon_width - 4, dungeon_width - 1, dungeon_height - 4,
+                                    dungeon_height - 1, dungeon_width, dungeon_height, 
+                                    total_rooms, rooms, dungeon_map,)
     for xvar in range(rooms[total_rooms][1]):
         xnew = xcoord + xvar
         for yvar in range(rooms[total_rooms][2]):
@@ -373,6 +376,7 @@ def position_rooms(stdscr, rooms, dungeon_map, dungeon_width, dungeon_height):
                 ynew = ycoord + yvar
                 dungeon_map[xnew, ynew] = f"room {room}"
 
+
     return dungeon_map
 
 
@@ -392,24 +396,34 @@ def room_pos_check(x_start, x_end, y_start, y_end, dungeon_width, dungeon_height
     if ycoord + rooms[room][2] >= dungeon_height:
         ycoord = dungeon_height - rooms[room][2] - 1
 
-    # checks that rooms don't overlap, restarts process if they do
-    for xvar in range(rooms[room][1]):
-        xnew = xcoord + xvar
-        for yvar in range(rooms[room][2]):
-            ynew = ycoord + yvar
-            if dungeon_map[xnew, ynew] == "wall":
-                continue
-            else:
-                room_pos_check(x_start, x_end, y_start, y_end, dungeon_width, dungeon_height, room, rooms, dungeon_map)
-
     return xcoord, ycoord
 
 
-def add_player(room_number, dungeon_map, x_size, y_size):
+def room_overlap_check(room, rooms, dungeon_map):
+    """
+    checks that rooms don't overlap, restarts process if they do
+    """
+
+
+def add_player(dungeon_map):
     """
     add player to the map
     """
-    # for room in dungeon_map
+    room_start = []
+
+    for value in dungeon_map:
+        if dungeon_map[value] != "room start":
+           continue
+        else:
+            room_start.append([value, dungeon_map[value]]) 
+
+    start_point = int(len(room_start) / 2)
+
+    start_key = room_start[start_point]
+
+    dungeon_map[start_key[0]] = "room start character"
+
+    return dungeon_map
 
 
 def add_monsters(room_number, dungeon_map, x_size, y_size):
