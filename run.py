@@ -469,6 +469,7 @@ def add_monster(dungeon_map, rooms):
 
     return dungeon_map
 
+
 def add_loot(room_number, dungeon_map, x_size, y_size):
     """
     add loot to the map
@@ -487,6 +488,12 @@ def mapconversion(character):
         for y_coord in range(len(coremap[0])):
             if str(coremap[x_coord][y_coord]) == "wall":
                 newmap.append("#")
+            elif character in str(coremap[x_coord][y_coord]):
+                newmap.append("@")
+            elif boss in str(coremap[x_coord][y_coord]):
+                newmap.append("B")
+            elif monster in str(coremap[x_coord][y_coord]):
+                newmap.append("m")
             else:
                 newmap.append(".")
     return(newmap)
