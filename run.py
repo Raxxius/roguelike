@@ -443,18 +443,21 @@ def add_boss(dungeon_map):
 
     return dungeon_map
 
+
 def add_monster(dungeon_map, rooms):
     """
     add monster to the map
     """
-    room_start = []
+    
     for room in rooms:
         if room == 0:
             continue
         elif room == len(rooms):
             continue
         else:
+            room_start = []
             for value in dungeon_map:
+                
                 if dungeon_map[value] != f"room {room}":
                     continue
                 else:
