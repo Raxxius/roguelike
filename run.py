@@ -190,7 +190,7 @@ def gamescreen(stdscr, character):
                            "WEAPON     ARMOUR\n"
                            f"{character[12]}{weap_gap}{character[13]}")
 
-    padmap = mapconversion(character)
+    padmap = map_conversion(character)
     # sets up the map pad - note needs to be updated to scale with the dungeon size
     gamemap = curses.newpad(20, 40)
     stdscr.refresh()
@@ -350,7 +350,7 @@ def position_rooms(stdscr, rooms, dungeon_map, dungeon_width, dungeon_height):
         xnew = xcoord + xvar
         for yvar in range(rooms[total_rooms][2]):
             ynew = ycoord + yvar
-            dungeon_map[xnew, ynew] = "room boss"
+            dungeon_map[xnew, ynew] = "room end"
 
     # Add other rooms
     for room in rooms:
@@ -441,7 +441,7 @@ def add_boss(dungeon_map):
 
     start_point = int(len(room_start) / 2)
     start_key = room_start[start_point]
-    dungeon_map[start_key[0]] = "room boss Boss"
+    dungeon_map[start_key[0]] = "room end boss"
 
     return dungeon_map
 
@@ -480,7 +480,7 @@ def add_loot(room_number, dungeon_map, x_size, y_size):
 
 # Gameplay functions
 
-def mapconversion(character):
+def map_conversion(character):
     """ takes the character and pulls the map from the google sheet,
     converts the map to # and .s to be inserted to the map pad """
     print(character)
@@ -492,7 +492,7 @@ def mapconversion(character):
                 newmap.append("#")
             elif "character" in str(coremap[x_coord][y_coord]):
                 newmap.append("@")
-            elif "Boss" in str(coremap[x_coord][y_coord]):
+            elif "boss" in str(coremap[x_coord][y_coord]):
                 newmap.append("B")
             elif "monster" in str(coremap[x_coord][y_coord]):
                 newmap.append("m")
