@@ -191,8 +191,8 @@ def gamescreen(stdscr, character):
                            f"{character[12]}{weap_gap}{character[13]}")
 
     padmap = mapconversion(character)
-    # sets up the map pad
-    gamemap = curses.newpad(60, 40)
+    # sets up the map pad - note needs to be updated to scale with the dungeon size
+    gamemap = curses.newpad(40, 20)
     stdscr.refresh()
     # test code
     for i in range(len(padmap)):
