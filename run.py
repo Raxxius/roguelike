@@ -361,15 +361,19 @@ def position_rooms(stdscr, rooms, dungeon_map, dungeon_width, dungeon_height):
         elif room <= q1:
             xcoord, ycoord = room_pos_check(1, round(dungeon_width / 2), 1, round(dungeon_height / 2),
                                             dungeon_width, dungeon_height, room, rooms, dungeon_map)
+            xcoord, ycoord = room_overlap_check(xcoord, ycoord, dungeon_map)
         elif room <= q2:
             xcoord, ycoord = room_pos_check(round(dungeon_width / 2), dungeon_width, 1, round(dungeon_height / 2),
                                             dungeon_width, dungeon_height, room, rooms, dungeon_map)
+            xcoord, ycoord = room_overlap_check(xcoord, ycoord, dungeon_map)
         elif room <= q3:
             xcoord, ycoord = room_pos_check(1, round(dungeon_width / 2), round(dungeon_height / 2), dungeon_height,
                                             dungeon_width, dungeon_height, room, rooms, dungeon_map)
+            xcoord, ycoord = room_overlap_check(xcoord, ycoord, dungeon_map)
         elif room <= total_rooms:
             xcoord, ycoord = room_pos_check(round(dungeon_width / 2), dungeon_width, round(dungeon_height / 2), dungeon_height,
                                             dungeon_width, dungeon_height, room, rooms, dungeon_map)
+            xcoord, ycoord = room_overlap_check(xcoord, ycoord, dungeon_map)
         else:
             print("Error in map generation")
         for xvar in range(rooms[room][1]):
@@ -401,10 +405,19 @@ def room_pos_check(x_start, x_end, y_start, y_end, dungeon_width, dungeon_height
     return xcoord, ycoord
 
 
-def room_overlap_check(room, rooms, dungeon_map):
+def room_overlap_check(xcoord, ycoord, dungeon_map):
     """
     checks that rooms don't overlap, restarts process if they do
     """
+    rooms_pos = []
+    for i in dungeon_map:
+        if "room" in dungeon_map[i]:
+            print(dungeon_map[i])
+        else:
+            pass
+
+
+    return xcoord, ycoord
 
 
 def add_player(dungeon_map):
