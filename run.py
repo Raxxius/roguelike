@@ -441,7 +441,7 @@ def add_boss(dungeon_map):
 
     start_point = int(len(room_start) / 2)
     start_key = room_start[start_point]
-    dungeon_map[start_key[0]] = "room boss boss"
+    dungeon_map[start_key[0]] = "room boss Boss"
 
     return dungeon_map
 
@@ -492,7 +492,7 @@ def mapconversion(character):
                 newmap.append("#")
             elif "character" in str(coremap[x_coord][y_coord]):
                 newmap.append("@")
-            elif "boss" in str(coremap[x_coord][y_coord]):
+            elif "Boss" in str(coremap[x_coord][y_coord]):
                 newmap.append("B")
             elif "monster" in str(coremap[x_coord][y_coord]):
                 newmap.append("m")
