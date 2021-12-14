@@ -434,7 +434,7 @@ def add_boss(dungeon_map):
     room_start = []
 
     for value in dungeon_map:
-        if dungeon_map[value] != "room boss":
+        if dungeon_map[value] != "room end":
            continue
         else:
             room_start.append([value, dungeon_map[value]]) 
