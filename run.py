@@ -200,8 +200,11 @@ def gamescreen(stdscr, character):
             gamemap.addstr(padmap[i])
         except curses.error:
             pass
-
-    gamemap.refresh(0, 0, 0, 26, 23, 79)
+    
+    try:
+        gamemap.refresh(0, 0, 0, 26, 23, 79)
+    except curses.error:
+        pass
 
     stdscr.refresh()
     character_stats.refresh()
@@ -488,11 +491,11 @@ def mapconversion(character):
         for y_coord in range(len(coremap[0])):
             if str(coremap[x_coord][y_coord]) == "wall":
                 newmap.append("#")
-            elif character in str(coremap[x_coord][y_coord]):
+            elif "character" in str(coremap[x_coord][y_coord]):
                 newmap.append("@")
-            elif boss in str(coremap[x_coord][y_coord]):
+            elif "boss" in str(coremap[x_coord][y_coord]):
                 newmap.append("B")
-            elif monster in str(coremap[x_coord][y_coord]):
+            elif "monster" in str(coremap[x_coord][y_coord]):
                 newmap.append("m")
             else:
                 newmap.append(".")
@@ -542,7 +545,7 @@ def main(stdscr):
     """
     character = player_select(stdscr)
     dungeon_size(stdscr, character)
-    # gamescreen(stdscr, character)
+    gamescreen(stdscr, character)
 
 
 wrapper(main)
