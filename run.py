@@ -192,7 +192,7 @@ def gamescreen(stdscr, character):
 
     padmap = mapconversion(character)
     # sets up the map pad
-    gamemap = curses.newpad(40, 20)
+    gamemap = curses.newpad(60, 40)
     stdscr.refresh()
     # test code
     for i in range(len(padmap)):
@@ -200,7 +200,6 @@ def gamescreen(stdscr, character):
             gamemap.addstr(padmap[i])
         except curses.error:
             pass
-    
     try:
         gamemap.refresh(0, 0, 0, 26, 23, 79)
     except curses.error:
