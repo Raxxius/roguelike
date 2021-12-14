@@ -463,7 +463,7 @@ def add_monster(dungeon_map, rooms):
                 else:
                     room_start.append([value, dungeon_map[value]]) 
 
-            start_point = int(len(room_start) / 2)
+            start_point = random.randint(1, len(room_start))
             start_key = room_start[start_point]
             dungeon_map[start_key[0]] = f"room {room} monster"
 
