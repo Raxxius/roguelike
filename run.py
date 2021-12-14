@@ -128,7 +128,7 @@ def dungeon_size(stdscr, character):
         # add boss to final room
         add_boss(dungeon_map)
         # add monsters to rooms
-        add_monster(dungeon_map, rooms)
+        add_monster(dungeon_map, room_number)
 
         """
         # add loot to random rooms
@@ -354,7 +354,7 @@ def position_rooms(stdscr, rooms, dungeon_map, dungeon_width, dungeon_height):
     for room in rooms:
         if room == 0:
             continue
-        elif room == total_rooms:
+        elif room == total_rooms + 1:
             continue
         elif room <= q1:
             xcoord, ycoord = room_pos_check(1, round(dungeon_width / 2), 1, round(dungeon_height / 2),
@@ -447,18 +447,22 @@ def add_monster(dungeon_map, rooms):
     """
     add monster to the map
     """
-    # Add boss to map
     room_start = []
-
-    for value in dungeon_map:
-        if dungeon_map[value] != "room boss":
-           continue
+    for room in rooms:
+        if room == 0:
+            continue
+        elif room == len(rooms):
+            continue
         else:
-            room_start.append([value, dungeon_map[value]]) 
+            for value in dungeon_map:
+                if dungeon_map[value] != f"room {room}":
+                    continue
+                else:
+                    room_start.append([value, dungeon_map[value]]) 
 
-    start_point = int(len(room_start) / 2)
-    start_key = room_start[start_point]
-    dungeon_map[start_key[0]] = "room boss boss"
+            start_point = int(len(room_start) / 2)
+            start_key = room_start[start_point]
+            dungeon_map[start_key[0]] = f"room {room} monster"
 
     return dungeon_map
 
