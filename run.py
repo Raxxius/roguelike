@@ -130,7 +130,7 @@ def dungeon_size(stdscr, character):
                                  round((x_size * y_size / ((2/3) * 100)))))
 
         room_list = []
-        position_rooms(stdscr, room_number, dungeon_map, x_size, y_size)
+        position_rooms(stdscr, room_number, dungeon_map, x_size, y_size, room_list)
 
         print(room_list)
         time.sleep(10)
@@ -323,7 +323,7 @@ def init_rooms(room_number):
     return rooms
 
 
-def position_rooms(stdscr, rooms, dungeon_map, dungeon_width, dungeon_height):
+def position_rooms(stdscr, rooms, dungeon_map, dungeon_width, dungeon_height, room_list):
     """
     This function puts the rooms generated in the init_rooms function
     into the dungeon, rooms are added by changing the "wall" value in the
@@ -338,7 +338,6 @@ def position_rooms(stdscr, rooms, dungeon_map, dungeon_width, dungeon_height):
     Rooms are populated in quarters.
     """
 
-    room_list = []
     total_rooms = len(rooms) - 1
     q1 = round(total_rooms / 4)
     q2 = q1 + round(total_rooms / 4)
@@ -369,8 +368,6 @@ def position_rooms(stdscr, rooms, dungeon_map, dungeon_width, dungeon_height):
 
     # Add other rooms
     for room in rooms:
-        print(room)
-        time.sleep(4)
         if room == 0:
             continue
         elif room == total_rooms + 1:
@@ -378,26 +375,26 @@ def position_rooms(stdscr, rooms, dungeon_map, dungeon_width, dungeon_height):
         elif room <= q1:
             xcoord, ycoord = room_pos_check(1, round(dungeon_width / 2), 1, round(dungeon_height / 2),
                                             dungeon_width, dungeon_height, room, rooms, dungeon_map)
-            # room{room} = Room(xcoord, xcoord + rooms[0][1], ycoord, ycoord + rooms[0][2], "entrance")
-            room_list.append(room[room] = Room(xcoord, xcoord + rooms[0][1], ycoord, ycoord + rooms[0][2], "entrance"))
+            newroom = Room(xcoord, xcoord + rooms[0][1], ycoord, ycoord + rooms[0][2], "entrance")
+            room_list.append(newroom)
 
         elif room <= q2:
             xcoord, ycoord = room_pos_check(round(dungeon_width / 2), dungeon_width, 1, round(dungeon_height / 2),
                                             dungeon_width, dungeon_height, room, rooms, dungeon_map)
-            # room[room] = Room(xcoord, xcoord + rooms[0][1], ycoord, ycoord + rooms[0][2], "middle")
-            room_list.append(room[room] = Room(xcoord, xcoord + rooms[0][1], ycoord, ycoord + rooms[0][2], "middle"))
+            newroom = Room(xcoord, xcoord + rooms[0][1], ycoord, ycoord + rooms[0][2], "middle")
+            room_list.append(newroom)
 
         elif room <= q3:
             xcoord, ycoord = room_pos_check(1, round(dungeon_width / 2), round(dungeon_height / 2), dungeon_height,
                                             dungeon_width, dungeon_height, room, rooms, dungeon_map)
-            room[room] = Room(xcoord, xcoord + rooms[0][1], ycoord, ycoord + rooms[0][2], "middle")
-            room_list.append(room[room])
+            newroom = Room(xcoord, xcoord + rooms[0][1], ycoord, ycoord + rooms[0][2], "middle")
+            room_list.append(newroom)
 
         elif room <= total_rooms:
             xcoord, ycoord = room_pos_check(round(dungeon_width / 2), dungeon_width, round(dungeon_height / 2), dungeon_height,
                                             dungeon_width, dungeon_height, room, rooms, dungeon_map)
-            room[room] = Room(xcoord, xcoord + rooms[0][1], ycoord, ycoord + rooms[0][2], "heart")
-            room_list.append(room[room])
+            newroom = Room(xcoord, xcoord + rooms[0][1], ycoord, ycoord + rooms[0][2], "heart")
+            room_list.append(newroom)
 
         else:
             print("Error in map generation")
