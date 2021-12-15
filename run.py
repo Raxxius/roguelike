@@ -133,7 +133,7 @@ def dungeon_size(stdscr, character):
         # add boss to final room
         add_boss(dungeon_map)
         # add monsters to rooms
-        add_monster(dungeon_map, room_number)
+        # add_monster(dungeon_map, room_number)
 
         """
         # add loot to random rooms
