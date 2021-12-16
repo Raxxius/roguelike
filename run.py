@@ -484,8 +484,10 @@ def add_monster(room_list, dungeon_map):
     """
 
     rooms = len(room_list)
+    m = 1
 
     for r in room_list:
+        
         if r.type == "entrance":
             dice = random.randint(1, 5)
             if dice == 1 or 2:
@@ -493,7 +495,8 @@ def add_monster(room_list, dungeon_map):
             else:
                 x_pos = random.randint(r.xmin, r.xmax)
                 y_pos = random.randint(r.ymin, r.ymax)
-                dungeon_map[x_pos, y_pos] = f"room {len(r)} monster {len(r)}"
+                dungeon_map[x_pos, y_pos] = f"room {r} monster {m}"
+                m += 1
         elif r.type == "middle":
             dice = random.randint(1, 5)
             if dice == 1:
@@ -501,15 +504,27 @@ def add_monster(room_list, dungeon_map):
             elif dice == 2 or 3 or 4:
                 x_pos = random.randint(r.xmin, r.xmax)
                 y_pos = random.randint(r.ymin, r.ymax)
-                dungeon_map[x_pos, y_pos] = f"room {len(r)} monster {len(r)}"
+                dungeon_map[x_pos, y_pos] = f"room {r} monster {m}"
+                m += 1
             else:
                 x_pos = random.randint(r.xmin, r.xmax)
                 y_pos = random.randint(r.ymin, r.ymax)
-                dungeon_map[x_pos, y_pos] = f"room {r} monster {r}"
+                dungeon_map[x_pos, y_pos] = f"room {r} monster {m}"
+                m += 1
                 x_pos_2 = random.randint(r.xmin, r.xmax)
                 y_pos_2 = random.randint(r.ymin, r.ymax)
-                dungeon_map[x_pos_2, y_pos_2] = f"room {len(r)} monster {len(r)} 2"
-                
+                dungeon_map[x_pos_2, y_pos_2] = f"room {r} monster {m}"
+                m += 1
+        elif r.type == "lair":
+            x_pos = random.randint(r.xmin, r.xmax)
+            y_pos = random.randint(r.ymin, r.ymax)
+            dungeon_map[x_pos, y_pos] = f"room {r} monster {m}"
+            m += 1
+            x_pos_2 = random.randint(r.xmin, r.xmax)
+            y_pos_2 = random.randint(r.ymin, r.ymax)
+            dungeon_map[x_pos_2, y_pos_2] = f"room {r} monster {m}"
+            m += 1
+    
     return dungeon_map
 """
             room_start = []
