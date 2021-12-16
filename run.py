@@ -30,14 +30,12 @@ class Dungeon(self, rooms, width, height):
 
 
 class Room:
-    def __init__(self, xmin, xmax, ymin, ymax, type, number):
+    def __init__(self, xmin, xmax, ymin, ymax, type):
         self.xmin = xmin
         self.xmax = xmax
         self.ymin = ymin
         self.ymax = ymax
         self.type = type
-        self.number = number
-
 
 
 # class Character(self, health, max_health, mana, max_mana, xp, level):
@@ -135,14 +133,12 @@ def dungeon_size(stdscr, character):
         room_list = []
         position_rooms(stdscr, room_number, dungeon_map, x_size, y_size, room_list)
 
-        print(room_list)
-        time.sleep(10)
         # add player to room start
         dungeon_map = add_player(dungeon_map)
         # add boss to final room
         add_boss(dungeon_map)
         # add monsters to rooms
-        add_monster(dungeon_map, room_number)
+        add_monster(room_list, dungeon_map)
 
         """
         # add loot to random rooms
@@ -354,8 +350,8 @@ def position_rooms(stdscr, rooms, dungeon_map, dungeon_width, dungeon_height, ro
         for yvar in range(rooms[0][2]):
             ynew = ycoord + yvar
             dungeon_map[xnew, ynew] = "room start"
-    room_start = Room(xcoord, xcoord + rooms[0][1], ycoord, ycoord + rooms[0][2], "start", room)
-    room_list.append(room_start)
+    newroom = Room(xcoord, xcoord + rooms[0][1], ycoord, ycoord + rooms[0][2], "start")
+    room_list.append(newroom)
 
     # Add boss room
     xcoord, ycoord = room_pos_check(dungeon_width - 4, dungeon_width - 1, dungeon_height - 4,
@@ -366,8 +362,8 @@ def position_rooms(stdscr, rooms, dungeon_map, dungeon_width, dungeon_height, ro
         for yvar in range(rooms[total_rooms][2]):
             ynew = ycoord + yvar
             dungeon_map[xnew, ynew] = "room end"
-    room_end = Room(xcoord, xcoord + rooms[0][1], ycoord, ycoord + rooms[0][2], "end", room)
-    room_list.append(room_end)
+    newroom = Room(xcoord, xcoord + rooms[0][1], ycoord, ycoord + rooms[0][2], "end")
+    room_list.append(newroom)
 
     # Add other rooms
     for room in rooms:
@@ -378,25 +374,25 @@ def position_rooms(stdscr, rooms, dungeon_map, dungeon_width, dungeon_height, ro
         elif room <= q1:
             xcoord, ycoord = room_pos_check(1, round(dungeon_width / 2), 1, round(dungeon_height / 2),
                                             dungeon_width, dungeon_height, room, rooms, dungeon_map)
-            newroom = Room(xcoord, xcoord + rooms[0][1], ycoord, ycoord + rooms[0][2], "entrance", room)
+            newroom = Room(xcoord, xcoord + rooms[0][1], ycoord, ycoord + rooms[0][2], "entrance")
             room_list.append(newroom)
 
         elif room <= q2:
             xcoord, ycoord = room_pos_check(round(dungeon_width / 2), dungeon_width, 1, round(dungeon_height / 2),
                                             dungeon_width, dungeon_height, room, rooms, dungeon_map)
-            newroom = Room(xcoord, xcoord + rooms[0][1], ycoord, ycoord + rooms[0][2], "middle", room)
+            newroom = Room(xcoord, xcoord + rooms[0][1], ycoord, ycoord + rooms[0][2], "middle")
             room_list.append(newroom)
 
         elif room <= q3:
             xcoord, ycoord = room_pos_check(1, round(dungeon_width / 2), round(dungeon_height / 2), dungeon_height,
                                             dungeon_width, dungeon_height, room, rooms, dungeon_map)
-            newroom = Room(xcoord, xcoord + rooms[0][1], ycoord, ycoord + rooms[0][2], "middle", room)
+            newroom = Room(xcoord, xcoord + rooms[0][1], ycoord, ycoord + rooms[0][2], "middle")
             room_list.append(newroom)
 
         elif room <= total_rooms:
             xcoord, ycoord = room_pos_check(round(dungeon_width / 2), dungeon_width, round(dungeon_height / 2), dungeon_height,
                                             dungeon_width, dungeon_height, room, rooms, dungeon_map)
-            newroom = Room(xcoord, xcoord + rooms[0][1], ycoord, ycoord + rooms[0][2], "heart", room)
+            newroom = Room(xcoord, xcoord + rooms[0][1], ycoord, ycoord + rooms[0][2], "heart")
             room_list.append(newroom)
 
         else:
@@ -486,26 +482,36 @@ def add_monster(room_list, dungeon_map):
     """
     add monster to the map
     """
+
     rooms = len(room_list)
 
-    for room in rooms:
-        if room == 0:
-            continue
-        elif room == len(rooms):
-            continue
-        else:
-            if room_list.type == "entrance":
-                dice = random.randint(1, 5)
-                if dice = 1 or 2:
-                    continue
-                else:
-                    x_pos = random.randint(roomlist.xmin, roomlist.xmax)
-                    y_pos = random.randint(roomlist.ymin, roomlist.ymax)
-                dungeon_map[x_pos, y_pos] = f"room {room} monster {room}"
-
-
+    for r in room_list:
+        if r.type == "entrance":
+            dice = random.randint(1, 5)
+            if dice == 1 or 2:
+                continue
+            else:
+                x_pos = random.randint(r.xmin, r.xmax)
+                y_pos = random.randint(r.ymin, r.ymax)
+                dungeon_map[x_pos, y_pos] = f"room {len(r)} monster {len(r)}"
+        elif r.type == "middle":
+            dice = random.randint(1, 5)
+            if dice == 1:
+                continue
+            elif dice == 2 or 3 or 4:
+                x_pos = random.randint(r.xmin, r.xmax)
+                y_pos = random.randint(r.ymin, r.ymax)
+                dungeon_map[x_pos, y_pos] = f"room {len(r)} monster {len(r)}"
+            else:
+                x_pos = random.randint(r.xmin, r.xmax)
+                y_pos = random.randint(r.ymin, r.ymax)
+                dungeon_map[x_pos, y_pos] = f"room {r} monster {r}"
+                x_pos_2 = random.randint(r.xmin, r.xmax)
+                y_pos_2 = random.randint(r.ymin, r.ymax)
+                dungeon_map[x_pos_2, y_pos_2] = f"room {len(r)} monster {len(r)} 2"
+                
     return dungeon_map
-
+"""
             room_start = []
             for value in dungeon_map:
                 
@@ -517,7 +523,7 @@ def add_monster(room_list, dungeon_map):
             start_point = random.randint(1, len(room_start))
             start_key = room_start[start_point]
             dungeon_map[start_key[0]] = f"room {room} monster"
-
+"""
 
 def add_loot(dungeon_map, rooms):
     """
