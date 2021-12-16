@@ -38,15 +38,17 @@ class Room:
         self.type = type
 
 
-"""
+
 # class Character(self, health, max_health, mana, max_mana, xp, level):
 #     def __init__(self, health, max_health, mana, max_mana, xp, level)
 
-# class Monster(self, type, health, attack, defence):
-    def __init__(self, health, attack, defence):
-        self.type
-        self.health = 
-"""
+
+class Monster:
+    def __init__(self, type, health, attack, defence):
+        self.type = type
+        self.health = health
+        self.attack = attack
+        self.defence = defence
 
 # Main flow functions
 
